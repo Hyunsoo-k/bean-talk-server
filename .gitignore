@@ -1,0 +1,15 @@
+# dependencies
+
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# 환경 변수 파일
+.env
+
+# db 유틸 함수 폴더
+db-utils
+
+# http 파일
+.request.http
