@@ -1,0 +1,41 @@
+{
+  "name": "bean-talk-server",
+  "version": "1.0.0",
+  "description": "BeanTalk의 RESTful api 프로젝트",
+  "homepage": "https://github.com/Hyunsoo-k/bean-talk-server#readme",
+  "bugs": {
+    "url": "https://github.com/Hyunsoo-k/bean-talk-server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyunsoo-k/bean-talk-server.git"
+  },
+  "license": "ISC",
+  "author": "Hyunsoo-kim",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --exec npx tsx dev-api/index.ts"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@vercel/node": "^4.0.0",
+    "bcrypt": "^6.0.0",
+    "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
