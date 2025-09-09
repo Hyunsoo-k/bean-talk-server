@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import UserModel from "../../model/user.js";
 import customHttpErrorHandler from "../../error-handler/custom-http-error-handler.js";
+import NotificationModel from "../../model/notification.js";
 
 dotenv.config();
 
-const editUserMiddleware = async (
+const checkUserNotificationMiddleware = async(
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,20 +17,20 @@ const editUserMiddleware = async (
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
-  const payload
-    = jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
+  const payload =
+    jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
-  const editedUser = await UserModel
-    .findByIdAndUpdate(
-      { _id: user_id },
-      { $set: { ...req.body } }
-    )
-    .lean();
-  if (!editedUser) {
-    return customHttpErrorHandler("사용자를 찾을 수 없습니다.", 404, next);
-  }
+
+  const { notification_id } = req.params;
+  await NotificationModel.findOneAndUpdate(
+    {
+      user: user_id,
+      "list._id": notification_id
+    },
+    { $set: { "list.$.isChecked": true } }
+  );
 
   next();
 };
 
-export default editUserMiddleware;
+export default checkUserNotificationMiddleware;
