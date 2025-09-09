@@ -16,7 +16,6 @@ const getUserNotificationsMiddleware = async(
   if (!accessToken) {
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
-
   const payload =
     jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
@@ -25,7 +24,6 @@ const getUserNotificationsMiddleware = async(
     return customHttpErrorHandler("알림을 찾을 수 없습니다.", 404, next);
   }
   const notifications = notification!.list;
-  
   res.locals.notifications = notifications;
   next();
 };

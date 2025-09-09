@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 const editUserController = async(req: Request, res: Response): Promise<any> => {
-  return res.status(201).json();
+  return res.status(201).send();
 };
 
 export default editUserController;

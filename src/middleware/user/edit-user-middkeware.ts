@@ -16,7 +16,6 @@ const editUserMiddleware = async (
   if (!accessToken) {
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
-
   const payload
     = jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
@@ -29,7 +28,6 @@ const editUserMiddleware = async (
   if (!editedUser) {
     return customHttpErrorHandler("사용자를 찾을 수 없습니다.", 404, next);
   }
-
   next();
 };
 

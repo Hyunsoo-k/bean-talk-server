@@ -6,7 +6,7 @@ type Locals = {
 };
 
 const getUserController = async(req: Request, res: Response): Promise<any> => {
-  return res.status(200).json({ ...res.locals as Locals });
+  return res.status(200).send({ ...res.locals as Locals });
 };
 
 export default getUserController;

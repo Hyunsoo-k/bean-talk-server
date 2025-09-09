@@ -16,11 +16,9 @@ const deleteUserNotificationMiddleware = async(
   if (!accessToken) {
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
-
   const payload =
     jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
-
   const { notification_id } = req.params;
   await NotificationModels.findOneAndUpdate(
     { user_id },
@@ -29,7 +27,6 @@ const deleteUserNotificationMiddleware = async(
         _id: notification_id
     }}}
   );
-
   next();
 };
 
