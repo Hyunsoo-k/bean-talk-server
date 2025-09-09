@@ -2,19 +2,38 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import authRouter from "../src/routes/auth/index.js";
+import userRouter from "../src/routes/user/index.js";
+import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 
 dotenv.config();
 
 mongoose
   .connect(process.env.DATABASE_URL as string, { autoIndex: false })
-  .then((): void => { console.log('connected to mongoDb'); })
-  .catch((err: Error): void => { console.log('Error connecting to MongoDB', err); });
+  .then((): void => {
+    console.log("connected to mongoDb");
+  })
+  .catch((err: Error): void => {
+    console.log("Error connecting to MongoDB", err);
+  });
 
 const app = express();
-app.use(cors({
-  origin: [
-    process.env.SERVER_DEVELOP_URL as string,
-    process.env.FRONT_END_DEVELOP_URL as string,
-    process.env.FRONT_END_PRODUCTION_URL as string
-  ]
-}));
+app.use(
+  cors({
+    origin: [process.env.SERVER_DEVELOP_URL as string, process.env.FRONT_END_DEVELOP_URL as string],
+  })
+);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use(globalErrorHandler);
+
+app.listen(3000, () => {
+  console.log("server on");
+});
+
+export default app;
