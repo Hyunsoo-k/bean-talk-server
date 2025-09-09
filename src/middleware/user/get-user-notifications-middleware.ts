@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
 import customHttpErrorHandler from "../../error-handler/custom-http-error-handler.js";
-import NotificationModel from "../../model/notification.js";
+import NotificationModels from "../../model/notifications.js";
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ const getUserNotificationsMiddleware = async(
   const payload =
     jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
-  const notification = await NotificationModel.findOne({ user_id }).lean()
+  const notification = await NotificationModels.findOne({ user_id }).lean()
   if (!notification) {
     return customHttpErrorHandler("알림을 찾을 수 없습니다.", 404, next);
   }

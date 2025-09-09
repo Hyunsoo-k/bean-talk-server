@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
 import customHttpErrorHandler from "../../error-handler/custom-http-error-handler.js";
-import NotificationModel from "../../model/notification.js";
+import NotificationModels from "../../model/notifications.js";
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ const checkUserNotificationMiddleware = async(
   const { user_id } = payload;
 
   const { notification_id } = req.params;
-  await NotificationModel.findOneAndUpdate(
+  await NotificationModels.findOneAndUpdate(
     {
       user: user_id,
       "list._id": notification_id

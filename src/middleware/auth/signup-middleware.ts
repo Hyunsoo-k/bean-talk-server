@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 import UserModel from "../../model/user.js";
-import NotificationModel from "../../model/notification.js";
+import NotificationModels from "../../model/notifications.js";
 
 const signupMiddleware = async(
   req: Request,
@@ -13,7 +13,7 @@ const signupMiddleware = async(
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await UserModel.create({ ...req.body, password: hashedPassword });
   const { _id: newUser_id } = newUser;
-  await NotificationModel.create({ user_id: newUser_id });
+  await NotificationModels.create({ user_id: newUser_id });
   
   next();
 };
