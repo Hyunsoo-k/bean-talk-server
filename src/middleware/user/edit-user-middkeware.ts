@@ -14,7 +14,7 @@ const editUserMiddleware = async (
 ): Promise<any> => {
   const { accessToken } = req.cookies;
   if (!accessToken) {
-    return customHttpErrorHandler("잘못된 토큰입니다.", 401, next);
+    return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
   const payload
