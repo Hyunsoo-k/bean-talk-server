@@ -4,7 +4,7 @@ const deleteUserNotificationController = async(
   req: Request,
   res: Response
 ): Promise<any> => {
-  return res.status(204).json();
+  return res.status(204).send();
 };
 
 export default deleteUserNotificationController;

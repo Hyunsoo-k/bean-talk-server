@@ -4,7 +4,7 @@ const checkUserNotificationController = async(
   req: Request,
   res: Response,
 ): Promise<any> => {
-  res.status(201).json();
+  res.status(201).send();
 };
 
 export default checkUserNotificationController;
