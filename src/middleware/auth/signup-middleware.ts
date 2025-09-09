@@ -11,6 +11,7 @@ const signupMiddleware = async(
   const { password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await UserModel.create({ ...req.body, password: hashedPassword });
+  
   res.locals.newUser = newUser;
   next();
 };

@@ -11,18 +11,17 @@ import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 dotenv.config();
 
 mongoose
-  .connect(process.env.DATABASE_URL as string, { autoIndex: false })
-  .then((): void => {
-    console.log("connected to mongoDb");
-  })
-  .catch((err: Error): void => {
-    console.log("Error connecting to MongoDB", err);
-  });
+  .connect(process.env.DATABASE_URL!, { autoIndex: false })
+  .then(() => { console.log("connected to mongoDb"); })
+  .catch((err: Error) => { console.log("Error connecting to MongoDB", err); });
 
 const app = express();
 app.use(
   cors({
-    origin: [process.env.SERVER_DEVELOP_URL as string, process.env.FRONT_END_DEVELOP_URL as string],
+    origin: [
+      process.env.SERVER_DEVELOP_URL!,
+      process.env.FRONT_END_DEVELOP_URL!
+    ],
   })
 );
 app.use(express.urlencoded({ extended: true }));
@@ -32,8 +31,6 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use(globalErrorHandler);
 
-app.listen(3000, () => {
-  console.log("server on");
-});
+app.listen(3000 | 3001, () => { console.log("server on"); });
 
 export default app;

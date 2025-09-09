@@ -18,7 +18,7 @@ const editUserMiddleware = async (
   }
 
   const payload
-    = jwt.verify(accessToken, process.env.JWT_SECRET_KEY as string) as { user_id: string};
+    = jwt.verify(accessToken, process.env.JWT_SECRET_KEY!) as { user_id: string };
   const { user_id } = payload;
   const editedUser = await UserModel
     .findByIdAndUpdate(

@@ -15,14 +15,22 @@ const loginMiddleware = async(
   const { email, password } = req.body;
 
   const user = await UserModel.findOne({ email }).lean();
-  if (!user) return res.status(401).json({ message: "등록되지 않은 이메일 입니다." });
+  if (!user) return res
+    .status(401)
+    .json({ message: "등록되지 않은 이메일 입니다." });
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  if (!isPasswordCorrect) return res.status(401).json({ message: "비밀번호가 일치하지 않습니다." });
+  if (!isPasswordCorrect) return res
+    .status(401)
+    .json({ message: "비밀번호가 일치하지 않습니다." });
   
   const { _id } = user;
   const payload = { user_id: _id.toString() };
-  const accessToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, { expiresIn: "24h" });
+  const accessToken = jwt.sign(
+    payload,
+    process.env.JWT_SECRET_KEY!,
+    { expiresIn: "24h" }
+  );
 
   res.locals.accessToken = accessToken;
   next();
