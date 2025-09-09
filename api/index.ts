@@ -32,8 +32,4 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use(globalErrorHandler);
 
-app.listen(3000, () => {
-  console.log("server on");
-});
-
 export default app;
