@@ -1,0 +1,126 @@
+### SIGN UP
+POST http://localhost:3001/auth/signup
+Content-Type: application/json
+
+{
+  "email": "beantalk@beantalk.com",
+  "nickname": "",
+  "password": "user1user1"
+}
+
+### LOGIN
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "beantalk@beantalk.com",
+  "password": "beantalk123"
+}
+
+### GET USER
+GET http://localhost:3000/users
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3Njk0OTU1LCJleHAiOjE3NTc3ODEzNTV9.8ngCvURxTSQ9kxj9usiT1nlsHLJilIFkfgC5nR3gEiQ
+
+### PATCH USER
+PATCH http://localhost:3001/users/edit
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3Njk0OTU1LCJleHAiOjE3NTc3ODEzNTV9.8ngCvURxTSQ9kxj9usiT1nlsHLJilIFkfgC5nR3gEiQ
+
+{
+  "nickname": "운영자1"
+}
+
+### DELETE USER
+DELETE http://localhost:3000/user/delete
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
+
+### GET NOTIFICATIONS
+GET http://localhost:3000/users/notifications
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+
+### GET POSTS
+GET http://localhost:3000/bbs/categories/thread/posts
+Content-Type: application/json
+
+### GET POST
+GET http://localhost:3001/post/68c09a8ef96166f961fb6d4e
+Content-Type: application/json
+
+### POST POST
+POST http://localhost:3000/bbs/categories/job/posts
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+
+{
+  "title": "잡 테스트9",
+  "content": "잡 테스트9",
+  "subCategory": "구직"
+}
+
+### PATCH POST
+PATCH http://localhost:3001/post/68c0994c27ae4f9c4810ebea
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3NDUyMzM2LCJleHAiOjE3NTc1Mzg3MzZ9.YTCDbiAUl8IIdGZGAhgsuSW9AnWa11DEkB0OVUMt7lE
+
+{
+  "title": "테스트(수정)",
+  "content": "테스트(수정)"
+}
+
+### DELETE POST
+DELETE http://localhost:3001/post/68c0994c27ae4f9c4810ebea
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3NDUyMzM2LCJleHAiOjE3NTc1Mzg3MzZ9.YTCDbiAUl8IIdGZGAhgsuSW9AnWa11DEkB0OVUMt7lE
+
+### CREATE COMMENT
+POST http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8/comments
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+
+{
+  "content": "댓글 테스트9"
+}
+
+### CREATE REPLY
+POST http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8/comments/68c8cdaa90ff7c5665438a2e
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+
+{
+  "content": "답글 테스트9"
+}
+
+##----------------------------------------------------------------------------------##
+##----------------------------------------------------------------------------------##
+
+
+### SIGN UP
+
+POST https://bean-talk-server.vercel.app/auth/signup
+Content-Type: application/json
+
+{
+  "email": "beantalk1@beantalk.com",
+  "nickname": "운영자1",
+  "password": "beantalk123"
+}
+
+
+### LOGIN
+
+POST https://bean-talk-server.vercel.app/auth/login
+Content-Type: application/json
+
+{
+  "email": "beantalk1@beantalk.com",
+  "password": "beantalk123"
+}
+
+### DELETE
+
+DELETE https://bean-talk-server.vercel.app/user/delete
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
