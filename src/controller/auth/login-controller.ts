@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
 const loginController = async (req: Request, res: Response): Promise<any> => {
   const { accessToken } = res.locals;
+  
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: false,

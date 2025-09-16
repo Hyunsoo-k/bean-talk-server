@@ -1,0 +1,7 @@
+import { Request, Response } from "express";
+
+const checkUserNotificationController = async (req: Request, res: Response): Promise<any> => {
+  res.status(201).send();
+};
+
+export default checkUserNotificationController;
