@@ -10,7 +10,14 @@ const getPostMiddleware = async (req: Request, res: Response, next: NextFunction
     return customHttpErrorHandler("잘못된 카테고리 입니다.", 400, next);
   }
 
-  const post = await postModelMap[category].findById(post_id).lean();
+  await postModelMap[category].updateOne({ _id: post_id }, { $inc: { views: 1 } });
+  
+  const post = await postModelMap[category]
+    .findById(post_id)
+    .populate({ path: "author", select: "_id nickname" })
+    .populate({ path: "comments.author", select: "_id nickname profileImageUrl" })
+    .populate({ path: "comments.replies.author", select: "_id nickname profileImageUrl" })
+    .lean();
 
   if (!post) {
     return customHttpErrorHandler("게시글을 찾을 수 없습니다.", 404, next);

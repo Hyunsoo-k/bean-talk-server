@@ -12,9 +12,9 @@ const getUserMiddleware = async (req: Request, res: Response, next: NextFunction
     return customErrorHandler("유저를 찾을 수 없습니다.", 400, next);
   }
 
-  const { nickname, profileImageUrl } = user;
+  const { email, nickname, profileImageUrl } = user;
 
-  res.locals.user = { nickname, profileImageUrl };
+  res.locals.user = { email, nickname, profileImageUrl };
   
   next();
 };
