@@ -23,6 +23,7 @@ app.use(
       process.env.SERVER_DEVELOP_URL!,
       process.env.FRONT_END_DEVELOP_URL!
     ],
+    credentials: true
   })
 );
 app.use(express.urlencoded({ extended: true }));
