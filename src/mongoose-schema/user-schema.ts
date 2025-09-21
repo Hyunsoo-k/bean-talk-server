@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
-const UserSchema = new Schema(
+import UserModel from "../mongoose-model/user-model.js";
+import CustomHttpError from "../types/custom-http-error.js";
+
+const UserSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -38,5 +40,21 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 );
+
+UserSchema.pre("save", async function () {
+  const sameEmailUser = await UserModel.findOne({ email: this.email });
+  if (sameEmailUser && !sameEmailUser._id.equals(this._id)) {
+    const err = new Error("이미 존재하는 이메일 입니다.") as CustomHttpError;
+    err.status = 400;
+    throw err;
+  }
+
+  const sameNicknameUser = await UserModel.findOne({ nickname: this.nickname });
+  if (sameNicknameUser && !sameNicknameUser._id.equals(this._id)) {
+    const err = new Error("이미 존재하는 닉네임 입니다.") as CustomHttpError;
+    err.status = 400;
+    throw err;
+  }
+});
 
 export default UserSchema;

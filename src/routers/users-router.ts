@@ -3,6 +3,8 @@ import expressAsyncHandler from "express-async-handler";
 
 import getUserMiddleware from "../middleware/users/get-user-middleware.js";
 import getUserController from "../controller/users/get-user-controller.js";
+import getUserMeMiddleware from "../middleware/users/get-user-me-middleware.js";
+import getUserMeController from "../controller/users/get-user-me-controller.js";
 import editUserMiddleware from "../middleware/users/edit-user-middleware.js";
 import editUserController from "../controller/users/edit-user-controller.js";
 import deleteUserMiddleware from "../middleware/users/delete-user-middleware.js";
@@ -23,16 +25,23 @@ usersRouter.get(
   expressAsyncHandler(getUserController)
 );
 
-// PATCH 유저 정보 수정
+// GET 내 정보 요청
+usersRouter.get(
+  "/me",
+  expressAsyncHandler(getUserMeMiddleware),
+  expressAsyncHandler(getUserMeController)
+)
+
+// PATCH 내 정보 수정
 usersRouter.patch(
-  "/edit",
+  "/me",
   expressAsyncHandler(editUserMiddleware),
   expressAsyncHandler(editUserController)
 );
 
-// DELETE 유저 정보 삭제
+// DELETE 내 정보 삭제
 usersRouter.delete(
-  "/delete",
+  "/me",
   expressAsyncHandler(deleteUserMiddleware),
   expressAsyncHandler(deleteUserController)
 );

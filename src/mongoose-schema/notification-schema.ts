@@ -2,11 +2,9 @@ import mongoose from "mongoose";
 
 import NotificationItemSchema from "./notification-item-schema.js";
 
-const { Schema } = mongoose;
-
-const NotificationSchema = new Schema({
+const NotificationSchema = new mongoose.Schema({
   user_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },

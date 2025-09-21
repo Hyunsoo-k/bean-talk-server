@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
-
-const NotificationItemSchema = new Schema(
+const NotificationItemSchema = new mongoose.Schema(
   {
     targetUrl: {
       type: String,
@@ -13,7 +11,7 @@ const NotificationItemSchema = new Schema(
       required: true,
     },
     triggeredBy: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },

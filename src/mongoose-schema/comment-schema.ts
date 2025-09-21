@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 import ReplySchema from "./reply-schema.js";
 
-const { Schema } = mongoose;
-
-const CommentSchema = new Schema(
+const CommentSchema = new mongoose.Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
