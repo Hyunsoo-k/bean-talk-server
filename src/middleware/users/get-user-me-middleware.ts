@@ -16,9 +16,10 @@ const getUserMeMiddleware = async (req: Request, res: Response, next: NextFuncti
    if (!userMe) {
     return customHttpErrorHandler("유저를 찾을 수 없습니다.", 404, next);
   }
+  
   const { _id, email, nickname, profileImageUrl } = userMe;
 
-  res.locals.userMe = {_id, email, nickname, profileImageUrl };
+  res.locals.userMe = { _id, email, nickname, profileImageUrl };
   next();
 };
 
