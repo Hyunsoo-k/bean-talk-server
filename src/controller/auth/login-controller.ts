@@ -10,7 +10,7 @@ const loginController = async (req: Request, res: Response): Promise<any> => {
     sameSite: "none",
   });
 
-  return res.status(200).send();
+  return res.status(200).json();
 };
 
 export default loginController;
