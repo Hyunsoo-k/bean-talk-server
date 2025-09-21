@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
-
-const ReplySchema = new Schema(
+const ReplySchema = new mongoose.Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },

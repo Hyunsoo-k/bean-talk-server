@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 import CommentSchema from "../mongoose-schema/comment-schema.js";
 
-const { Schema } = mongoose;
-
-const ThreadPostSchema = new Schema(
+const ThreadPostSchema = new mongoose.Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -16,12 +14,12 @@ const ThreadPostSchema = new Schema(
       default: 0,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
     scraps: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
@@ -49,7 +47,7 @@ const ThreadPostSchema = new Schema(
   }
 );
 
-const PromotionPostSchema = new Schema(
+const PromotionPostSchema = new mongoose.Schema(
   {
     subCategory: {
       type: String,
@@ -57,7 +55,7 @@ const PromotionPostSchema = new Schema(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -66,12 +64,12 @@ const PromotionPostSchema = new Schema(
       default: 0,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
     scraps: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
@@ -99,7 +97,7 @@ const PromotionPostSchema = new Schema(
   }
 );
 
-const JobPostSchema = new Schema(
+const JobPostSchema = new mongoose.Schema(
   {
     subCategory: {
       type: String,
@@ -107,7 +105,7 @@ const JobPostSchema = new Schema(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -116,12 +114,12 @@ const JobPostSchema = new Schema(
       default: 0,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
     scraps: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
@@ -149,10 +147,10 @@ const JobPostSchema = new Schema(
   }
 );
 
-const NewsPostSchema = new Schema(
+const NewsPostSchema = new mongoose.Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -161,12 +159,12 @@ const NewsPostSchema = new Schema(
       default: 0,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
     scraps: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
@@ -194,10 +192,10 @@ const NewsPostSchema = new Schema(
   }
 );
 
-const NoticePostSchema = new Schema(
+const NoticePostSchema = new mongoose.Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -206,12 +204,12 @@ const NoticePostSchema = new Schema(
       default: 0,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
     scraps: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       default: [],
     },
