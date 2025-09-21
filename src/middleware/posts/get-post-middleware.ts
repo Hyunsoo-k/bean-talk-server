@@ -18,7 +18,6 @@ const getPostMiddleware = async (req: Request, res: Response, next: NextFunction
     .populate({ path: "comments.author", select: "_id nickname profileImageUrl" })
     .populate({ path: "comments.replies.author", select: "_id nickname profileImageUrl" })
     .lean();
-
   if (!post) {
     return customHttpErrorHandler("게시글을 찾을 수 없습니다.", 404, next);
   }
