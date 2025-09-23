@@ -5,9 +5,7 @@ const loginController = async (req: Request, res: Response): Promise<any> => {
   
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: false,
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "lax",
   });
 
   return res.status(200).json();
