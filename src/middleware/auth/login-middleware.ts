@@ -24,6 +24,7 @@ const loginMiddleware = async (req: Request, res: Response, next: NextFunction):
   const payload = { user_id };
 
   const accessToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, { expiresIn: "24h" });
+  
   res.locals.accessToken = accessToken;
   next();
 };
