@@ -17,15 +17,10 @@ mongoose
   .catch((err: Error) => { console.log("Error connecting to MongoDB", err); });
 
 const app = express();
-app.use(
-  cors({
-    origin: [
-      process.env.SERVER_DEVELOP_URL!,
-      process.env.FRONT_END_DEVELOP_URL!
-    ],
-    credentials: true
-  })
-);
+app.use(cors({
+  origin: [process.env.SERVER_DEVELOP_URL!, process.env.FRONT_END_DEVELOP_URL!],
+  credentials: true
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
