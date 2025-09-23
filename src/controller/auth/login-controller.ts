@@ -8,7 +8,7 @@ const loginController = async (req: Request, res: Response): Promise<any> => {
   //   maxAge: 24 * 60 * 60 * 1000,
   // });
 
-  return res.status(200).json(accessToken);
+  return res.status(200).json({ accessToken });
 };
 
 export default loginController;
