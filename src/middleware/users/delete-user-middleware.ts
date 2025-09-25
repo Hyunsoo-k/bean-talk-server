@@ -10,7 +10,7 @@ const deleteUserMiddleware = async (req: Request, res: Response, next: NextFunct
     return customHttpErrorHandler("잘못된 토큰입니다.", 401, next);
   }
 
-  const { user_id } = verifyAccessToken(accessToken);
+  const { user_id } = verifyAccessToken(req, next);
 
   const isUserExists = !!(await UserModel.exists({ _id: user_id }));
   if (!isUserExists) {

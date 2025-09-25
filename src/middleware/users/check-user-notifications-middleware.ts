@@ -10,7 +10,7 @@ const checkUserNotificationMiddleware = async (req: Request, res: Response, next
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
-  const { user_id } = verifyAccessToken(accessToken);
+  const { user_id } = verifyAccessToken(req, next);
 
   const { notification_id } = req.params;
 

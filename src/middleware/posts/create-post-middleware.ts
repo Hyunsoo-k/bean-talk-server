@@ -11,7 +11,7 @@ const createPostMiddleware = async (req: Request, res: Response, next: NextFunct
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
-  const { user_id } = verifyAccessToken(accessToken);
+  const { user_id } = verifyAccessToken(req, next);
   
   const { category } = req.params;
   if (!isValidCategory(category)) {

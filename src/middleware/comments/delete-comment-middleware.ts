@@ -11,7 +11,7 @@ const deleteCommentMiddleware = async (req: Request, res: Response, next: NextFu
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
-  const { user_id } = verifyAccessToken(accessToken);
+  const { user_id } = verifyAccessToken(req, next);
 
   const { category, post_id, comment_id } = req.params;
   if (!isValidCategory(category)) {

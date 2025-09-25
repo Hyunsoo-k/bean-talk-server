@@ -10,7 +10,7 @@ const getUserMeMiddleware = async (req: Request, res: Response, next: NextFuncti
     return customHttpErrorHandler("권한이 없습니다.", 401, next);
   }
 
-  const { user_id } = verifyAccessToken(accessToken);
+  const { user_id } = verifyAccessToken(req, next);
 
   const userMe = await UserModel.findById(user_id).lean();
    if (!userMe) {
