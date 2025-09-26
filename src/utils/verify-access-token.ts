@@ -1,19 +1,16 @@
-import { NextFunction, Request } from "express";
+import { Request } from "express";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import customHttpErrorHandler from "../error-handler/custom-http-error-handler.js";
+import type Payload from "../types/payload.js";
+import HttpError from "../error/http-error.js";
 
 dotenv.config();
 
-type Payload = {
-  user_id: string;
-};
-
-const verifyAccessToken = (req: Request, next: NextFunction) => {
+const verifyAccessToken = (req: Request) => {
   const authorization = req.headers.authorization;
   if (!authorization) {
-    throw customHttpErrorHandler("권한이 없습니다", 401, next);
+    throw new HttpError(401, "권한이 없습니다.");
   }
 
   const accessToken = authorization.split(" ")[1];
@@ -22,4 +19,4 @@ const verifyAccessToken = (req: Request, next: NextFunction) => {
   return payload;
 };
 
-export default verifyAccessToken
+export default verifyAccessToken;

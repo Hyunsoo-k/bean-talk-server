@@ -1,11 +1,11 @@
 ### SIGN UP
-POST http://localhost:3001/auth/signup
+POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
   "email": "beantalk@beantalk.com",
-  "nickname": "",
-  "password": "user1user1"
+  "nickname": "운영자",
+  "password": "beantalk95"
 }
 
 ### LOGIN
@@ -14,13 +14,18 @@ Content-Type: application/json
 
 {
   "email": "beantalk@beantalk.com",
-  "password": "beantalk123"
+  "password": "beantalk95"
 }
 
-### GET USER
-GET http://localhost:3000/users
+### GET USERME
+GET http://localhost:3000/users/me
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3Njk0OTU1LCJleHAiOjE3NTc3ODEzNTV9.8ngCvURxTSQ9kxj9usiT1nlsHLJilIFkfgC5nR3gEiQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4OTA0NTE3LCJleHAiOjE3NTg5OTA5MTd9.e2h-mudt0qx59fX5El2llTwviAB467CTcxMy5B1RkqA
+
+### GET USER
+GET http://localhost:3000/users/68c9b1edd0ad3e5dd9d83379
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4MDQ4Nzg5LCJleHAiOjE3NTgxMzUxODl9.cTPtVwdwocG0tJNyWvZeRLG5UdT6tXXT-uO5e-BAWBE
 
 ### PATCH USER
 PATCH http://localhost:3001/users/edit
@@ -42,7 +47,7 @@ Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
 
 ### GET POSTS
-GET http://localhost:3000/bbs/categories/thread/posts
+GET http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8
 Content-Type: application/json
 
 ### GET POST

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 import UserModel from "../mongoose-model/user-model.js";
-import CustomHttpError from "../types/custom-http-error.js";
+import CustomHttpError from "../types/http-error.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -11,10 +11,7 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
-      match: [
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        "올바른 이메일 형식이 아닙니다."
-      ],
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "올바른 이메일 형식이 아닙니다."],
     },
     nickname: {
       type: String,

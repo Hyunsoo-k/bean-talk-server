@@ -1,38 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 
-import customHttpErrorHandler from "../../error-handler/custom-http-error-handler.js";
+import HttpError from "../../error/http-error.js";
 import verifyAccessToken from "../../utils/verify-access-token.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import postModelMap from "../../variables/post-model-map.js";
 
 const deleteReplyMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const { accessToken } = req.cookies;
-  if (!accessToken) {
-    return customHttpErrorHandler("권한이 없습니다.", 401, next);
-  }
-
-  const { user_id } = verifyAccessToken(req, next);
+  const { user_id } = verifyAccessToken(req);
 
   const { category, post_id, comment_id, reply_id } = req.params;
   if (!isValidCategory(category)) {
-    return customHttpErrorHandler("잘못된 카테고리 입니다.", 400, next);
+    throw new HttpError(400, "잘못된 카테고리 입니다.");
   }
 
   const post = await postModelMap[category].findById(post_id);
   if (!post) {
-    return customHttpErrorHandler("게시글을 찾을 수 없습니다.", 404, next);
+    throw new HttpError(404, "게시글을 찾을 수 없습니다.");
   }
 
   const comment = post.comments.id(comment_id);
   if (!comment) {
-    return customHttpErrorHandler("댓글을 찾을 수 없습니다", 404, next);
+    throw new HttpError(404, "댓글을 찾을 수 없습니다.");
   }
 
   const reply = comment.replies.id(reply_id);
   if (!reply) {
-    return customHttpErrorHandler("답글을 찾을 수 없습니다", 404, next);
+    throw new HttpError(404, "답글을 찾을 수 없습니다.");
   } else if (!reply.author.equals(user_id)) {
-    return customHttpErrorHandler("권한이 없습니다.", 401, next);
+    throw new HttpError(401, "권한이 없습니다.");
   }
 
   comment.replies.pull(reply_id);
