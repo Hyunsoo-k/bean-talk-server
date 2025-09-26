@@ -18,13 +18,6 @@ import deleteUserNotificationController from "../controller/users/delete-user-no
 
 const usersRouter = express.Router();
 
-// GET 유저 정보 요청
-usersRouter.get(
-  "/:_id",
-  expressAsyncHandler(getUserMiddleware),
-  expressAsyncHandler(getUserController)
-);
-
 // GET 내 정보 요청
 usersRouter.get(
   "/me",
@@ -44,6 +37,13 @@ usersRouter.delete(
   "/me",
   expressAsyncHandler(deleteUserMiddleware),
   expressAsyncHandler(deleteUserController)
+);
+
+// GET 유저 정보 요청
+usersRouter.get(
+  "/:_id",
+  expressAsyncHandler(getUserMiddleware),
+  expressAsyncHandler(getUserController)
 );
 
 // GET 유저 알림 요청
