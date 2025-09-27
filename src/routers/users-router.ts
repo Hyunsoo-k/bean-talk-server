@@ -39,32 +39,32 @@ usersRouter.delete(
   expressAsyncHandler(deleteUserController)
 );
 
-// GET 유저 정보 요청
+// GET 내 알림 요청
 usersRouter.get(
-  "/:_id",
-  expressAsyncHandler(getUserMiddleware),
-  expressAsyncHandler(getUserController)
-);
-
-// GET 유저 알림 요청
-usersRouter.get(
-  "/notifications",
+  "/me/notifications",
   expressAsyncHandler(getUserNotificationsMiddleware),
   expressAsyncHandler(getUserNotificationsController)
 );
 
 // PATCH 유저 알림 확인
 usersRouter.patch(
-  "/notifications/:notification_id",
+  "/me/notifications/:notification_id",
   expressAsyncHandler(checkUserNotificationMiddleware),
   expressAsyncHandler(checkUserNotificationController)
 );
 
 // DELETE 유저 알림 삭제
 usersRouter.delete(
-  "/notifications/:notification_id",
+  "/me/notifications/:notification_id",
   expressAsyncHandler(deleteUserNotificationMiddleware),
   expressAsyncHandler(deleteUserNotificationController)
+);
+
+// GET 유저 정보 요청
+usersRouter.get(
+  "/:_id",
+  expressAsyncHandler(getUserMiddleware),
+  expressAsyncHandler(getUserController)
 );
 
 export default usersRouter;
