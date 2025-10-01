@@ -7,7 +7,7 @@ const optimizeBbs = async (post: Post) => {
 
   const firstImage = $("img").first();
 
-  const thumbnailSrc = firstImage.length ? firstImage.attr("src") : null;
+  const thumbnailUrl = firstImage.length ? firstImage.attr("src") : null;
   
   const textContent = $("body").text().trim().slice(0, 700);
   
@@ -19,7 +19,7 @@ const optimizeBbs = async (post: Post) => {
   
   const { comments, ...rest } = post;
 
-  return { ...rest, content: textContent, commentCount, thumbnailSrc };
+  return { ...rest, content: textContent, commentCount, thumbnailUrl };
 };
 
 export default optimizeBbs;
