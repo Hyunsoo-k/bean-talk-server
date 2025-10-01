@@ -8,7 +8,14 @@ import optimizeBbs from "../../utils/optimize-bbs.js";
 
 const getPostsMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   const { category } = req.params;
-  const { title, content, author, subCategory, query, cursor } = req.query;
+  const {
+    title,
+    content,
+    author,
+    subCategory,
+    keyword,
+    cursor
+  } = req.query;
 
   if (!isValidCategory(category)) {
     throw new HttpError(401, "권한이 없습니다.");
@@ -17,11 +24,11 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
   let filter = {};
 
   if (title) {
-    filter = { ...filter, title: { $regex: query, $options: "i" } };
+    filter = { ...filter, title: { $regex: keyword, $options: "i" } };
   } else if (content) {
-    filter = { ...filter, content: { $regex: query, $options: "i" } };
+    filter = { ...filter, content: { $regex: keyword, $options: "i" } };
   } else if (author) {
-    filter = { ...filter, author: { $regex: query, $options: "i" } };
+    filter = { ...filter, author: { $regex: keyword, $options: "i" } };
   } else if (subCategory) {
     filter = { ...filter, subCategory };
   }

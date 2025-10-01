@@ -51,7 +51,7 @@ const PromotionPostSchema = new mongoose.Schema(
   {
     subCategory: {
       type: String,
-      enum: ["카페", "납품"],
+      enum: ["cafe", "deliver"],
       required: true,
     },
     author: {
@@ -101,7 +101,7 @@ const JobPostSchema = new mongoose.Schema(
   {
     subCategory: {
       type: String,
-      enum: ["구인", "구직"],
+      enum: ["hiring", "seeking"],
       required: true,
     },
     author: {
