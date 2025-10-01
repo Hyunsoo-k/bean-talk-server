@@ -7,12 +7,9 @@ import postModelMap from "../../variables/post-model-map.js";
 import optimizeBbs from "../../utils/optimize-bbs.js";
 
 const getPostsMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const { category } = req.params;
+  const { category, subCategory } = req.params;
   const {
-    title,
-    content,
-    author,
-    subCategory,
+    queryOption,
     keyword,
     cursor
   } = req.query;
@@ -23,19 +20,65 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
 
   let filter = {};
 
-  if (title) {
-    filter = { ...filter, title: { $regex: keyword, $options: "i" } };
-  } else if (content) {
-    filter = { ...filter, content: { $regex: keyword, $options: "i" } };
-  } else if (author) {
-    filter = { ...filter, author: { $regex: keyword, $options: "i" } };
-  } else if (subCategory) {
-    filter = { ...filter, subCategory };
+  switch (queryOption) {
+    case "title":
+      filter = {
+        ...filter,
+        title: {
+          $regex: keyword,
+          $options: "i"
+        }
+      }
+      break;
+    case "content":
+      filter = {
+        ...filter,
+        content: {
+          $regex: keyword,
+          $options: "i"
+        }
+      }
+      break;
+    case "titleAndContent":
+      filter = {
+        ...filter,
+        $or: [
+          {
+            title: {
+              $regex: keyword,
+              $options: "i"
+            }
+          },
+          {
+            content: {
+              $regex: keyword,
+              $options: "i"
+            }
+          }
+        ]
+      }
+      break;
+    case "author":
+      filter = {
+      ...filter,
+      author: {
+        $regex: keyword,
+        $options: "i"
+      }
+    };
+      break;
+  }
+
+  if (subCategory !== "all") {
+    filter = { ...filter, subCategory }
   }
 
   if (cursor) {
     const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
-    filter = { ...filter, _id: { $lt: objectIdCursor } };
+    filter = {
+      ...filter,
+      _id: { $lt: objectIdCursor }
+    };
   }
 
   const limit = 18;

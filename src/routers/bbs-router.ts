@@ -29,7 +29,7 @@ const bbsRouter = express.Router();
 
 // GET 게시글 목록 요청
 bbsRouter.get(
-  "/categories/:category/posts",
+  "/categories/:category/sub-categories/:subCategory/posts",
   expressAsyncHandler(getPostsMiddleware),
   expressAsyncHandler(getPostsController)
 );
