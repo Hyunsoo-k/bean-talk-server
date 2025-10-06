@@ -81,7 +81,7 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
     };
   }
 
-  const limit = 18;
+  const limit = 12;
 
   const posts = await postModelMap[category]
     .find(filter)
