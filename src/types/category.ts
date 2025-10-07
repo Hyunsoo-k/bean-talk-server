@@ -7,4 +7,4 @@ type Category =
 
 type SubCategory = "";
 
-export default Category;
+export type { Category };

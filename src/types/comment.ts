@@ -13,4 +13,4 @@ interface Comment extends Document {
   updatedAt: Date;
 };
 
-export default Comment;
+export type { Comment };

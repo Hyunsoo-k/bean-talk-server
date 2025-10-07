@@ -13,14 +13,14 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "beantalk@beantalk.com",
-  "password": "beantalk95"
+  "email": "user1@beantalk.com",
+  "password": "user1user1"
 }
 
 ### GET USERME
 GET http://localhost:3000/users/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4OTA0NTE3LCJleHAiOjE3NTg5OTA5MTd9.e2h-mudt0qx59fX5El2llTwviAB467CTcxMy5B1RkqA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU5MDY3MTIyLCJleHAiOjE3NTkxNTM1MjJ9.9rH4qHZE8tKqtIJqdk6XDRPS6WbCYdWqwUjXJrY3nPE
 
 ### GET USER
 GET http://localhost:3000/users/68c9b1edd0ad3e5dd9d83379
@@ -47,22 +47,21 @@ Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
 
 ### GET POSTS
-GET http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8
+GET http://localhost:3000/bbs/categories/news/sub-categories/all/posts
 Content-Type: application/json
 
 ### GET POST
-GET http://localhost:3001/post/68c09a8ef96166f961fb6d4e
+GET http://localhost:3000/bbs/categories/thread/posts/68e2c40c03e265074cc9a0cf
 Content-Type: application/json
 
-### POST POST
-POST http://localhost:3000/bbs/categories/job/posts
+### CREATE POST
+POST http://localhost:3000/bbs/categories/thread/posts
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU5NjkxNzA3LCJleHAiOjE3NTk3NzgxMDd9.Zd4fuJseSeZIC45MzMk9YHwbFmPF-FQno7cnVm-2k14
+  
 {
-  "title": "잡 테스트9",
-  "content": "잡 테스트9",
-  "subCategory": "구직"
+  "title": "스레드 테스트5스레드 테스트5스레드 테스트5",
+  "content": "스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트"
 }
 
 ### PATCH POST
@@ -81,12 +80,12 @@ Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3NDUyMzM2LCJleHAiOjE3NTc1Mzg3MzZ9.YTCDbiAUl8IIdGZGAhgsuSW9AnWa11DEkB0OVUMt7lE
 
 ### CREATE COMMENT
-POST http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8/comments
+POST http://localhost:3000/bbs/categories/thread/posts/68e2c40c03e265074cc9a0cf/comments
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjZmQ1ODMyMjQ3MWJkN2Q4YTFmYjQ0IiwiaWF0IjoxNzU5NzU2OTUzLCJleHAiOjE3NTk4NDMzNTN9.E_tMHWQxQyvx6Cc-R5V9BvErpnOvuK40TkASGeKVZ7Y
 
 {
-  "content": "댓글 테스트9"
+  "content": "댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1"
 }
 
 ### CREATE REPLY
@@ -115,17 +114,21 @@ Content-Type: application/json
 
 
 ### LOGIN
-
 POST https://bean-talk-server.vercel.app/auth/login
 Content-Type: application/json
 
 {
-  "email": "beantalk1@beantalk.com",
-  "password": "beantalk123"
+  "email": "beantalk@beantalk.com",
+  "password": "beantalk95"
 }
 
 ### DELETE
-
-DELETE https://bean-talk-server.vercel.app/user/delete
+DELETE https://bean-talk-server.vercel.app/localhost:3000/users/notifications/delete
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
+
+### GET USERME
+
+GET https://bean-talk-server.vercel.app/users/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4OTA1NDQxLCJleHAiOjE3NTg5OTE4NDF9.qbil1C45kCBaKUiZctH0DGLEiGkMkoRbz8JXfHN7wzo

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 const getUserNotificationsController = async (req: Request, res: Response): Promise<any> => {
   const { notifications } = res.locals;

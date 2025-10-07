@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 const signupController = async (req: Request, res: Response): Promise<any> => {
   const { newUser } = res.locals;

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { Request, Response, NextFunction} from "express";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

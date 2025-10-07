@@ -8,4 +8,4 @@ type Reply = {
   updatedAt: Date;
 };
 
-export default Reply;
+export type { Reply };

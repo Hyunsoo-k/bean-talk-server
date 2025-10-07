@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 import verifyAccessToken from "../../utils/verify-access-token.js";
 import NotificationModels from "../../mongoose-model/notification-model.js";

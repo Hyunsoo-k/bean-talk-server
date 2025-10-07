@@ -2,4 +2,4 @@ type Payload = {
   user_id: string;
 };
 
-export default Payload;
+export type { Payload };

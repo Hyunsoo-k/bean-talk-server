@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 
-import Category from "../types/category.js";
-import Post from "../types/post.js";
+import type { Category } from "../types/category.js";
+import type { Post } from "../types/post.js";
 
 const optimizeBbs = async (category: Category, post: Post) => {
   const $ = cheerio.load(post.content || "");

@@ -1,4 +1,4 @@
-import type Category from "../types/category.js";
+import type { Category } from "../types/category.js";
 
 const isValidCategory  = (category: string): category is Category => {
   if (

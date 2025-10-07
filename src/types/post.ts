@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-import type Comment from "./comment.js";
+import type { Comment } from "./comment.js";
 
 type Post = {
   _id: Types.ObjectId;
@@ -12,4 +12,4 @@ type Post = {
   updatedAt: Date;
 };
 
-export default Post;
+export type { Post };

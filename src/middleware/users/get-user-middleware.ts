@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 import HttpError from "../../error/http-error.js";
 import UserModel from "../../mongoose-model/user-model.js";

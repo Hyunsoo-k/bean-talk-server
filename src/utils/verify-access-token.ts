@@ -2,8 +2,8 @@ import { Request } from "express";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
+import type { Payload } from "../types/payload.js";
 import HttpError from "../error/http-error.js";
-import type Payload from "../types/payload.js";
 
 dotenv.config();
 
