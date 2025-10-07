@@ -95,11 +95,17 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
       },
       {
         path: "comments",
-        populate: {
-          path: "author",
-          select: "_id nickname"
-        }
-      },
+        populate: [
+          {
+            path: "author",
+            select: "_id nickname"
+          },
+          {
+            path: "replies.author",
+            select: "_id nickname"
+          }
+        ]
+      }
     ])
     .lean();
 

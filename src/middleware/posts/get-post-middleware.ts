@@ -14,9 +14,18 @@ const getPostMiddleware = async (req: Request, res: Response, next: NextFunction
 
   const post = await postModelMap[category]
     .findById(post_id)
-    .populate({ path: "author", select: "_id nickname" })
-    .populate({ path: "comments.author", select: "_id nickname profileImageUrl" })
-    .populate({ path: "comments.replies.author", select: "_id nickname profileImageUrl" })
+    .populate({
+      path: "author",
+      select: "_id nickname"
+    })
+    .populate({
+      path: "comments.author",
+      select: "_id nickname profileImageUrl"
+    })
+    .populate({
+      path: "comments.replies.author",
+      select: "_id nickname profileImageUrl"
+    })
     .lean();
   if (!post) {
     throw new HttpError(404, "게시글을 찾을 수 없습니다.");
