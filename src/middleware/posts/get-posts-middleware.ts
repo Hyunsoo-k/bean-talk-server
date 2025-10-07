@@ -98,11 +98,11 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
         populate: [
           {
             path: "author",
-            select: "_id nickname"
+            select: "_id nickname profileImageUrl"
           },
           {
             path: "replies.author",
-            select: "_id nickname"
+            select: "_id nickname profileImageUrl"
           }
         ]
       }
