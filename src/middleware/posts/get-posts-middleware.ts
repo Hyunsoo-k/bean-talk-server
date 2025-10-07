@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
+import type { Post } from "../../types/post.js";
 import HttpError from "../../error/http-error.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import postModelMap from "../../variables/post-model-map.js";
@@ -87,7 +88,19 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
     .find(filter)
     .sort({ _id: -1 })
     .limit(limit + 1)
-    .populate({ path: "author", select: "_id nickname" })
+    .populate([
+      {
+        path: "author",
+        select: "_id nickname"
+      },
+      {
+        path: "comments",
+        populate: {
+          path: "author",
+          select: "_id nickname"
+        }
+      },
+    ])
     .lean();
 
   const hasNextPage = posts.length > limit;
@@ -100,7 +113,7 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
     posts.pop();
   }
 
-  const optimizedPosts = await Promise.all(posts.map(optimizeBbs));
+  const optimizedPosts = await Promise.all(posts.map(async (post: Post) => optimizeBbs(category, post)));
 
   const postsData = {
     posts: optimizedPosts,

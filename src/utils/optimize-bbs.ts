@@ -1,8 +1,9 @@
 import * as cheerio from "cheerio";
 
+import Category from "../types/category.js";
 import Post from "../types/post.js";
 
-const optimizeBbs = async (post: Post) => {
+const optimizeBbs = async (category: Category, post: Post) => {
   const $ = cheerio.load(post.content || "");
 
   const firstImage = $("img").first();
@@ -19,7 +20,21 @@ const optimizeBbs = async (post: Post) => {
   
   const { comments, ...rest } = post;
 
-  return { ...rest, content: textContent, commentCount, thumbnailUrl };
+  return category === "thread"
+    ?  {
+      ...rest,
+      content: textContent,
+      commentCount,
+      comments,
+      thumbnailUrl
+    }
+    : {
+        ...rest,
+        content:
+        textContent,
+        commentCount,
+        thumbnailUrl
+      };
 };
 
 export default optimizeBbs;
