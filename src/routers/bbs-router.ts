@@ -85,7 +85,7 @@ bbsRouter.delete(
 
 // POST 답글 생성
 bbsRouter.post(
-  "/categories/:category/posts/:post_id/comments/:comment_id",
+  "/categories/:category/posts/:post_id/comments/:comment_id/replies",
   expressAsyncHandler(createReplyMiddleware),
   expressAsyncHandler(createReplyController)
 );
