@@ -84,11 +84,13 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
 
   const limit = 12;
 
-  const posts = await postModelMap[category]
+  let mongooseQuery = postModelMap[category]
     .find(filter)
     .sort({ _id: -1 })
-    .limit(limit + 1)
-    .populate([
+    .limit(limit + 1);
+
+  if (category === "thread") {
+    mongooseQuery = mongooseQuery.populate([
       {
         path: "author",
         select: "_id nickname"
@@ -106,8 +108,10 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
           }
         ]
       }
-    ])
-    .lean();
+    ]);
+  }
+
+  const posts = await mongooseQuery.lean();
 
   const hasNextPage = posts.length > limit;
 
@@ -119,7 +123,8 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
     posts.pop();
   }
 
-  const optimizedPosts = await Promise.all(posts.map(async (post: Post) => optimizeBbs(category, post)));
+  const unoptimizedPosts = posts.map(async (post: Post) => optimizeBbs(category, post));
+  const optimizedPosts = await Promise.all(unoptimizedPosts);
 
   const postsData = {
     posts: optimizedPosts,
