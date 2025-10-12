@@ -1,3 +1,4 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -11,34 +12,41 @@ import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 
 dotenv.config();
 
-const startServer = async () => {
+const app = express();
+
+app.use(cors({
+  origin: [
+    process.env.SERVER_DEVELOP_URL!,
+    process.env.FRONT_END_DEVELOP_URL!,
+  ],
+  credentials: true,
+}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/auth", authRouter);
+app.use("/users", usersRouter);
+app.use("/bbs", bbsRouter);
+app.use(globalErrorHandler);
+
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
   try {
     await mongoose.connect(process.env.DATABASE_URL!, { autoIndex: false });
     console.log("Connected to MongoDB");
-
-    const app = express();
-
-    app.use(cors({
-      origin: [
-        process.env.SERVER_DEVELOP_URL!,
-        process.env.FRONT_END_DEVELOP_URL!
-      ],
-      credentials: true,
-    }));
-    app.use(express.urlencoded({ extended: true }));
-    app.use(express.json());
-    app.use(cookieParser());
-
-    app.use("/auth", authRouter);
-    app.use("/users", usersRouter);
-    app.use("/bbs", bbsRouter);
-    app.use(globalErrorHandler);
   } catch (err) {
-    console.error("Failed to connect to MongoDB:", err);
-    process.exit(1);
+    console.error("MongoDB connection error:", err);
   }
 };
 
-startServer();
+const handler = async (req: VercelRequest, res: VercelResponse) => {
+  await connectToDatabase();
+  
+  return app(req, res);
+};
 
-export default startServer;
+export default handler;

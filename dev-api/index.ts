@@ -13,8 +13,9 @@ dotenv.config();
 
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.DATABASE_URL!, { autoIndex: false });
-    console.log("Connected to MongoDB");
+    await mongoose
+      .connect(process.env.DATABASE_URL!, { autoIndex: false })
+      .then(() => { console.log("Connected to MongoDB"); });
 
     const app = express();
 
