@@ -33,9 +33,6 @@ const startServer = async () => {
     app.use("/users", usersRouter);
     app.use("/bbs", bbsRouter);
     app.use(globalErrorHandler);
-
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
     console.error("Failed to connect to MongoDB:", err);
     process.exit(1);
