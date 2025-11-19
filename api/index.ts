@@ -34,7 +34,6 @@ app.use("/categories/:category/posts", postsRouter);
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
 app.use(globalErrorHandler);
-app.use(globalErrorHandler);
 
 const connectToDatabase = async () => {
   if (mongoose.connection.readyState >= 1) {
