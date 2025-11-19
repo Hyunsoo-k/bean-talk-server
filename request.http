@@ -1,14 +1,14 @@
-### SIGN UP
+### 회원가입
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "beantalk@beantalk.com",
-  "nickname": "운영자",
-  "password": "beantalk95"
+  "email": "user1@beantalk.com",
+  "nickname": "user1",
+  "password": "user1user1"
 }
 
-### LOGIN
+### 로그인
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -17,17 +17,17 @@ Content-Type: application/json
   "password": "user1user1"
 }
 
-### GET USERME
+### GET 내 정보
 GET http://localhost:3000/users/me
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU5MDY3MTIyLCJleHAiOjE3NTkxNTM1MjJ9.9rH4qHZE8tKqtIJqdk6XDRPS6WbCYdWqwUjXJrY3nPE
 
-### GET USER
+### GET 유저
 GET http://localhost:3000/users/68c9b1edd0ad3e5dd9d83379
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4MDQ4Nzg5LCJleHAiOjE3NTgxMzUxODl9.cTPtVwdwocG0tJNyWvZeRLG5UdT6tXXT-uO5e-BAWBE
 
-### PATCH USER
+### PATCH 유저
 PATCH http://localhost:3001/users/edit
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3Njk0OTU1LCJleHAiOjE3NTc3ODEzNTV9.8ngCvURxTSQ9kxj9usiT1nlsHLJilIFkfgC5nR3gEiQ
@@ -36,99 +36,117 @@ Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDI
   "nickname": "운영자1"
 }
 
-### DELETE USER
+### DELETE 유저
 DELETE http://localhost:3000/user/delete
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
 
-### GET NOTIFICATIONS
+### GET 알림
 GET http://localhost:3000/users/notifications
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
 
-### GET POSTS
-GET http://localhost:3000/bbs/categories/news/sub-categories/all/posts
+### PATCH 알림
+
+### DELETE 알림
+
+### GET 게시글 목록
+GET http://localhost:3000/categories/job/posts
 Content-Type: application/json
 
-### GET POST
-GET http://localhost:3000/bbs/categories/thread/posts/68e2c40c03e265074cc9a0cf
+### GET 게시글
+GET http://localhost:3000/categories/news/posts/6915e564522049208a62d939
 Content-Type: application/json
 
-### CREATE POST
+### CREATE 게시글
 POST http://localhost:3000/bbs/categories/thread/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU5NjkxNzA3LCJleHAiOjE3NTk3NzgxMDd9.Zd4fuJseSeZIC45MzMk9YHwbFmPF-FQno7cnVm-2k14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjZmQ1ODMyMjQ3MWJkN2Q4YTFmYjQ0IiwiaWF0IjoxNzYxNDEwNTE2LCJleHAiOjE3NjE0OTY5MTZ9.XMZ1LlXAT9Q7-FLaV3rqNjaE6Ezy586JbEw1Qth7-gI
   
 {
-  "title": "스레드 테스트5스레드 테스트5스레드 테스트5",
-  "content": "스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트스레드 테스트"
+  "title": "댓글분리1댓글분리1",
+  "content": "댓글분리1댓글분리1댓글분리1"
 }
 
-### PATCH POST
-PATCH http://localhost:3001/post/68c0994c27ae4f9c4810ebea
+### PATCH 게시글
+PATCH http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3NDUyMzM2LCJleHAiOjE3NTc1Mzg3MzZ9.YTCDbiAUl8IIdGZGAhgsuSW9AnWa11DEkB0OVUMt7lE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzYzMDQyMTQ1LCJleHAiOjE3NjMxMjg1NDV9.wXC4Qk_TnuIKPh1BTLa2rg96ArfkQ9IH-8NCMrhVUwU
 
 {
-  "title": "테스트(수정)",
-  "content": "테스트(수정)"
+  "title": "news 게시글 테스트 1 (수정)",
+  "content": "news 게시글 테스트 1 (수정)"
 }
 
-### DELETE POST
-DELETE http://localhost:3001/post/68c0994c27ae4f9c4810ebea
+### DELETE 게시글
+DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d93d
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3NDUyMzM2LCJleHAiOjE3NTc1Mzg3MzZ9.YTCDbiAUl8IIdGZGAhgsuSW9AnWa11DEkB0OVUMt7lE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
 
-### CREATE COMMENT
-POST http://localhost:3000/bbs/categories/thread/posts/68e2c40c03e265074cc9a0cf/comments
+### GET 댓글 목록
+GET http://localhost:3000/categories/news/posts/6915e564522049208a62d939/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjZmQ1ODMyMjQ3MWJkN2Q4YTFmYjQ0IiwiaWF0IjoxNzU5NzU2OTUzLCJleHAiOjE3NTk4NDMzNTN9.E_tMHWQxQyvx6Cc-R5V9BvErpnOvuK40TkASGeKVZ7Y
+
+### CREATE 댓글
+POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzc0Nzc4LCJleHAiOjE3NjM0NjExNzh9.cpEIEatWEkHwed3kIJrSdh9Jl28LOXQumutVNWDi54k
 
 {
-  "content": "댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1댓글 테스트1"
+  "content": "댓글 테스트 5"
 }
 
-### CREATE REPLY
-POST http://localhost:3000/bbs/categories/job/posts/68c8cd5e39ebb3df5748c4e8/comments/68c8cdaa90ff7c5665438a2e
+### PATCH 댓글
+PATCH http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691643d56c6601ff4661265e
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
 
 {
-  "content": "답글 테스트9"
+  "content": "댓글 테스트 3 (수정 2)"
 }
 
-##----------------------------------------------------------------------------------##
-##----------------------------------------------------------------------------------##
-
-
-### SIGN UP
-
-POST https://bean-talk-server.vercel.app/auth/signup
+### DELETE 댓글
+DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691643d56c6601ff4661265e
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
+
+### CREATE 답글
+POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691af6cb0d5b27433afbf8ca/replies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzc2MjAzLCJleHAiOjE3NjM0NjI2MDN9.XUXF1DvcpaJAB0kOLHQ3pMNaH8LKLkbp6h2EXvCYnrQ
 
 {
-  "email": "beantalk1@beantalk.com",
-  "nickname": "운영자1",
-  "password": "beantalk123"
+  "content": "답글 테스트 1"
 }
 
-
-### LOGIN
-POST https://bean-talk-server.vercel.app/auth/login
+### PATCH 답글
+PATCH http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691af6cb0d5b27433afbf8ca/replies/691afc69bcac61f2b35f5a0d
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzc2MjAzLCJleHAiOjE3NjM0NjI2MDN9.XUXF1DvcpaJAB0kOLHQ3pMNaH8LKLkbp6h2EXvCYnrQ
 
 {
-  "email": "beantalk@beantalk.com",
-  "password": "beantalk95"
+  "content": "답글 테스트 1 (수정 1)"
 }
 
-### DELETE
-DELETE https://bean-talk-server.vercel.app/localhost:3000/users/notifications/delete
-Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
 
-### GET USERME
+### DELETE 답글
 
-GET https://bean-talk-server.vercel.app/users/me
+### CREATE 좋아요
+POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/likes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjOWIxZWRkMGFkM2U1ZGQ5ZDgzMzc5IiwiaWF0IjoxNzU4OTA1NDQxLCJleHAiOjE3NTg5OTE4NDF9.qbil1C45kCBaKUiZctH0DGLEiGkMkoRbz8JXfHN7wzo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs
+
+### DELETE 좋아요
+DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/likes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs
+
+### CREATE 스크랩
+POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/scraps
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs
+
+### DELETE 스크랩
+DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/scraps
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs

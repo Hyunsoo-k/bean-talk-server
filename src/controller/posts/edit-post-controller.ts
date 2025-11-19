@@ -1,7 +1,9 @@
 import type { Request, Response } from "express";
 
 const editPostController = async (req: Request, res: Response): Promise<any> => {
-  return res.status(204).json();
+  const { editedPost } = res.locals;
+
+  return res.status(200).json(editedPost);
 };
 
 export default editPostController;

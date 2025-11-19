@@ -1,9 +1,10 @@
-import { Types } from "mongoose";
+import mongoose from "mongoose";
 
 type Reply = {
-  _id: Types.ObjectId;
-  author: Types.ObjectId;
+  _id: mongoose.Types.ObjectId;
+  author: mongoose.Types.ObjectId;
   content: string;
+  isEdited: boolean;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -1,13 +1,18 @@
-import { Types } from "mongoose";
+import mongoose from "mongoose";
 
-import type { Comment } from "./comment.js";
+import { SubCategory } from "./category.js";
 
 type Post = {
-  _id: Types.ObjectId;
-  author: Types.ObjectId;
+  __v: number;
+  _id: mongoose.Types.ObjectId;
+  views: number;
+  author: mongoose.Types.ObjectId;
+  subCategory?: SubCategory; 
   title: string;
   content: string;
-  comments: Comment[];
+  commentCount: number;
+  likes: mongoose.Types.ObjectId[];
+  scraps: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 };

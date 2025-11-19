@@ -4,11 +4,17 @@ import HttpError from "../../error/http-error.js";
 import verifyAccessToken from "../../utils/verify-access-token.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import postModelMap from "../../variables/post-model-map.js";
+import { CommentContainer } from "../../mongoose-models/index.js";
 
-const deleteReplyMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+const deleteReplyMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const { user_id } = verifyAccessToken(req);
 
   const { category, post_id, comment_id, reply_id } = req.params;
+  
   if (!isValidCategory(category)) {
     throw new HttpError(400, "잘못된 카테고리 입니다.");
   }
@@ -18,7 +24,12 @@ const deleteReplyMiddleware = async (req: Request, res: Response, next: NextFunc
     throw new HttpError(404, "게시글을 찾을 수 없습니다.");
   }
 
-  const comment = post.comments.id(comment_id);
+  const commentContainer = await CommentContainer.findOne({ post_id });
+  if (!commentContainer) {
+    throw new HttpError(404, "댓글 컨테이너를 찾을 수 없습니다.");
+  }
+
+  const comment = commentContainer.comments.id(comment_id);
   if (!comment) {
     throw new HttpError(404, "댓글을 찾을 수 없습니다.");
   }
@@ -26,17 +37,17 @@ const deleteReplyMiddleware = async (req: Request, res: Response, next: NextFunc
   const reply = comment.replies.id(reply_id);
   if (!reply) {
     throw new HttpError(404, "답글을 찾을 수 없습니다.");
-  } else if (!reply.author.equals(user_id)) {
-    throw new HttpError(401, "권한이 없습니다.");
+  }
+
+  if (!reply.author.equals(user_id)) {
+    throw new HttpError(403, "권한이 없습니다.");
   }
 
   comment.replies.pull(reply_id);
-
-  if (comment.replies.length === 0 && comment.deletedHavingReply) {
-    post.comments.pull(comment_id);
-  }
+  post.commentCount -= 1;
 
   await post.save();
+  await commentContainer.save();
 
   next();
 };

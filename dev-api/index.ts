@@ -6,7 +6,10 @@ import cookieParser from "cookie-parser";
 
 import authRouter from "../src/routers/auth-router.js";
 import usersRouter from "../src/routers/users-router.js";
-import bbsRouter from "../src/routers/bbs-router.js";
+import postsRouter from "../src/routers/posts-router.js";
+import commentsRouter from "../src/routers/comments-router.js";
+import repliesRouter from "../src/routers/replies.router.js";
+
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 
 dotenv.config();
@@ -32,7 +35,9 @@ const startServer = async () => {
 
     app.use("/auth", authRouter);
     app.use("/users", usersRouter);
-    app.use("/bbs", bbsRouter);
+    app.use("/categories/:category/posts", postsRouter);
+    app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
+    app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
     app.use(globalErrorHandler);
 
     const PORT = process.env.PORT || 3000;

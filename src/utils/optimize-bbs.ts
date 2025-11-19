@@ -4,6 +4,19 @@ import type { Category } from "../types/category.js";
 import type { Post } from "../types/post.js";
 
 const optimizeBbs = async (category: Category, post: Post) => {
+  const {
+    _id,
+    views,
+    likes,
+    scraps,
+    commentCount,
+    subCategory,
+    author,
+    title,
+    createdAt,
+    updatedAt,
+  } = post;
+
   const $ = cheerio.load(post.content || "");
 
   const firstImage = $("img").first();
@@ -11,29 +24,34 @@ const optimizeBbs = async (category: Category, post: Post) => {
   const thumbnailUrl = firstImage.length ? firstImage.attr("src") : null;
   
   const textContent = $("body").text().trim().slice(0, 700);
-  
-  const commentCount = (post.comments).reduce((acc, comment) => {
-    const replies = comment.replies.length;
 
-    return acc + (comment.deletedHavingReply ? replies : 1 + replies);
-  }, 0);
-  
-  const { comments, ...rest } = post;
-
-  return category === "thread"
+  return (category === "promotion" || category === "job")
     ?  {
-      ...rest,
-      content: textContent,
-      commentCount,
-      comments,
-      thumbnailUrl
-    }
-    : {
-        ...rest,
-        content:
-        textContent,
+        _id,
+        views,
+        likes,
+        scraps,
         commentCount,
-        thumbnailUrl
+        subCategory,
+        author,
+        thumbnailUrl,
+        title,
+        content: textContent,
+        createdAt,
+        updatedAt,
+      }
+    : {
+        _id,
+        views,
+        likes,
+        scraps,
+        commentCount,
+        author,
+        title,
+        thumbnailUrl,
+        content: textContent,
+        createdAt,
+        updatedAt,
       };
 };
 

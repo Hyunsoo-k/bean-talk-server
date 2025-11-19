@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const NotificationItemSchema = new mongoose.Schema(
+const NotificationSchema = new mongoose.Schema(
   {
     targetUrl: {
       type: String,
@@ -28,7 +28,6 @@ const NotificationItemSchema = new mongoose.Schema(
     isChecked: {
       type: Boolean,
       default: false,
-      required: true,
     },
   },
   {
@@ -36,4 +35,4 @@ const NotificationItemSchema = new mongoose.Schema(
   }
 );
 
-export default NotificationItemSchema;
+export default NotificationSchema;

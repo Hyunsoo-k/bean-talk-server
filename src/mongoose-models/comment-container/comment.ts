@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import ReplySchema from "./reply-schema.js";
+import ReplySchema from "./reply.js";
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -18,6 +18,10 @@ const CommentSchema = new mongoose.Schema(
     replies: {
       type: [ReplySchema],
       default: [],
+    },
+    isEdited: {
+      type: Boolean,
+      default: false,
     },
     deletedHavingReply: {
       type: Boolean,

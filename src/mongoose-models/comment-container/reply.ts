@@ -14,6 +14,10 @@ const ReplySchema = new mongoose.Schema(
       minLength: 1,
       maxLength: 1000,
     },
+    isEdited: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

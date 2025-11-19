@@ -1,10 +1,5 @@
-type Category =
-  | "thread"
-  | "promotion"
-  | "job"
-  | "news"
-  | "notice";
+type Category = "notice" | "news" | "thread" | "job" | "promotion"
 
-type SubCategory = "";
+type SubCategory ="cafe" | "deliver" | "hiring" | "seeking";
 
-export type { Category };
+export type { Category, SubCategory };

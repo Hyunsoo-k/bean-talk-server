@@ -1,7 +1,7 @@
+import type { Model } from "mongoose";
 import mongoose from "mongoose";
 
-import UserModel from "../mongoose-model/user-model.js";
-import HttpError from "../error/http-error.js";
+import HttpError from "../../error/http-error.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -38,13 +38,15 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.pre("save", async function () {
-  const sameEmailUser = await UserModel.findOne({ email: this.email });
+UserSchema.pre("save", async function (): Promise<void> {
+  const Model = this.constructor as Model<Document>;
+
+  const sameEmailUser = await Model.findOne({ email: this.email });
   if (sameEmailUser && !sameEmailUser._id.equals(this._id)) {
     throw new HttpError(400, "이미 존재하는 이메일 입니다.");
   }
 
-  const sameNicknameUser = await UserModel.findOne({ nickname: this.nickname });
+  const sameNicknameUser = await Model.findOne({ nickname: this.nickname });
   if (sameNicknameUser && !sameNicknameUser._id.equals(this._id)) {
     throw new HttpError(400, "이미 존재하는 닉네임 입니다.");
   }

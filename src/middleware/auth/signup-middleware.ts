@@ -1,16 +1,32 @@
 import type { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 
-import UserModel from "../../mongoose-model/user-model.js";
-import NotificationModels from "../../mongoose-model/notification-model.js";
+import { User, NotificationContainer } from "../../mongoose-models/index.js";
 
-const signupMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const { password } = req.body;
+const signupMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { email, password, nickname } = req.body;
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await UserModel.create({ ...req.body, password: hashedPassword });
+  const newUser = await User.create({
+    email,
+    password: hashedPassword,
+    nickname,
+  });
+  
   const { _id: newUser_id } = newUser;
-  await NotificationModels.create({ user_id: newUser_id });
+
+  await NotificationContainer.create({ user_id: newUser_id });
+
+  res.locals.newUser = {
+    newUser_id,
+    email,
+    nickname,
+  };
 
   next();
 };

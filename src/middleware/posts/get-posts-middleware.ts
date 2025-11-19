@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import type { PipelineStage } from "mongoose";
 import mongoose from "mongoose";
 
 import type { Post } from "../../types/post.js";
@@ -7,70 +8,46 @@ import isValidCategory from "../../utils/is-valid-category.js";
 import postModelMap from "../../variables/post-model-map.js";
 import optimizeBbs from "../../utils/optimize-bbs.js";
 
-const getPostsMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const { category, subCategory } = req.params;
+const getPostsMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { category } = req.params;
+
+  if (!isValidCategory(category)) {
+    throw new HttpError(400, "잘못된 카테고리 입니다.");
+  }
+
   const {
+    subCategory,
     queryOption,
     keyword,
     cursor
   } = req.query;
 
-  if (!isValidCategory(category)) {
-    throw new HttpError(401, "권한이 없습니다.");
-  }
-
   let filter = {};
 
   switch (queryOption) {
     case "title":
-      filter = {
-        ...filter,
-        title: {
-          $regex: keyword,
-          $options: "i"
-        }
-      }
+      filter = { title: { $regex: keyword, $options: "i" } };
       break;
     case "content":
-      filter = {
-        ...filter,
-        content: {
-          $regex: keyword,
-          $options: "i"
-        }
-      }
+      filter = { content: { $regex: keyword, $options: "i" } };
       break;
     case "titleAndContent":
-      filter = {
-        ...filter,
-        $or: [
-          {
-            title: {
-              $regex: keyword,
-              $options: "i"
-            }
-          },
-          {
-            content: {
-              $regex: keyword,
-              $options: "i"
-            }
-          }
+      filter = { $or: [
+          { title: { $regex: keyword, $options: "i" } },
+          { content: { $regex: keyword, $options: "i" } }
         ]
-      }
+      };
       break;
     case "author":
-      filter = {
-      ...filter,
-      author: {
-        $regex: keyword,
-        $options: "i"
-      }
-    };
+      filter = { author: { $regex: keyword, $options: "i" } };
       break;
   }
 
-  if (subCategory !== "all") {
+  if (subCategory && subCategory!== "all") {
     filter = { ...filter, subCategory }
   }
 
@@ -84,34 +61,50 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
 
   const limit = 12;
 
-  let mongooseQuery = postModelMap[category]
-    .find(filter)
-    .sort({ _id: -1 })
-    .limit(limit + 1);
-
-  if (category === "thread") {
-    mongooseQuery = mongooseQuery.populate([
-      {
-        path: "author",
-        select: "_id nickname"
-      },
-      {
-        path: "comments",
-        populate: [
-          {
-            path: "author",
-            select: "_id nickname profileImageUrl"
-          },
-          {
-            path: "replies.author",
-            select: "_id nickname profileImageUrl"
-          }
-        ]
+  const aggregationPipeline: PipelineStage[] = [
+    { $match: filter },
+    {
+      $sort: { _id: -1, }
+    },
+    { $limit: limit + 1 },
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "author",
       }
-    ]);
-  }
+    },
+    {
+      $unwind: {
+        path: "$author",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $project: {
+        author: {
+          _id: 1,
+          nickname: 1,
+          profileImageUrl: 1,
+        },
+        title: 1,
+        content: 1,
+        commentCount: 1,
+        subCategory: {
+          $cond: {
+            if: { $ne: ["$subCategory", undefined] },
+            then: "$subCategory",
+            else: "$$REMOVE",
+          }
+        },
+        createdAt: 1,
+        updatedAt: 1,
+      },
+    }
+  ];
 
-  const posts = await mongooseQuery.lean();
+  const posts = await postModelMap[category].aggregate(aggregationPipeline);
 
   const hasNextPage = posts.length > limit;
 
@@ -133,6 +126,7 @@ const getPostsMiddleware = async (req: Request, res: Response, next: NextFunctio
   };
 
   res.locals.postsData = postsData;
+
   next();
 };
 

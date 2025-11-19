@@ -1,13 +1,13 @@
-import { Types, Document } from "mongoose";
+import { Types } from "mongoose"
 
-import Reply from "./reply.js";
+import type { Reply } from "./reply.js";
 
-interface Comment extends Document {
+type Comment = {
   _id: Types.ObjectId;
-  subCategory?: "카페" | "납품" | "구인" | "구직";
   author: Types.ObjectId;
   content: string;
   replies: Reply[];
+  isEdited: boolean;
   deletedHavingReply: boolean;
   createdAt: Date;
   updatedAt: Date;

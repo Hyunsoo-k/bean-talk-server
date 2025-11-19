@@ -15,7 +15,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nodemon --exec npx tsx dev-api/index.ts"
+    "dev": "nodemon --exec npx tsx dev-api/index.ts",
+    "maniplate": "npx tsx db-utils/maniplate.ts"
   },
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
