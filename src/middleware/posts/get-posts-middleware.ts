@@ -55,7 +55,7 @@ const getPostsMiddleware = async (
     const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
     filter = {
       ...filter,
-      _id: { $lt: objectIdCursor }
+      _id: { $lte: objectIdCursor }
     };
   }
 
