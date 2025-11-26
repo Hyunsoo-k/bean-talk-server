@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const NewsPostSchema = new mongoose.Schema(
   {
+    subCategory: {
+      type: String,
+      enum: ["domestic", "international"],
+      required: true,
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

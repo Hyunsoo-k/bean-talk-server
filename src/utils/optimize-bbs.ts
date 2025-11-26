@@ -25,34 +25,20 @@ const optimizeBbs = async (category: Category, post: Post) => {
   
   const textContent = $("body").text().trim().slice(0, 700);
 
-  return (category === "promotion" || category === "job")
-    ?  {
-        _id,
-        views,
-        likes,
-        scraps,
-        commentCount,
-        subCategory,
-        author,
-        thumbnailUrl,
-        title,
-        content: textContent,
-        createdAt,
-        updatedAt,
-      }
-    : {
-        _id,
-        views,
-        likes,
-        scraps,
-        commentCount,
-        author,
-        title,
-        thumbnailUrl,
-        content: textContent,
-        createdAt,
-        updatedAt,
-      };
+  return {
+    _id,
+    ...(category !== "thread" && { subCategory }),
+    views,
+    likes,
+    scraps,
+    commentCount,
+    author,
+    thumbnailUrl,
+    title,
+    content: textContent,
+    createdAt,
+    updatedAt,
+  };
 };
 
 export default optimizeBbs;
