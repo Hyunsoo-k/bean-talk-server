@@ -90,7 +90,6 @@ const getPostsMiddleware = async (
         },
         title: 1,
         content: 1,
-        commentCount: 1,
         subCategory: {
           $cond: {
             if: { $ne: ["$subCategory", undefined] },
@@ -98,6 +97,9 @@ const getPostsMiddleware = async (
             else: "$$REMOVE",
           }
         },
+        views: 1,
+        likes: 1,
+        commentCount: 1,
         createdAt: 1,
         updatedAt: 1,
       },
