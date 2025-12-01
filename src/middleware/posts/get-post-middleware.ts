@@ -11,8 +11,6 @@ const getPostMiddleware = async (
   next: NextFunction
 ): Promise<void> => {
   const { category, post_id } = req.params;
-  console.log("req.params:", req.params);
-  console.log("category:", category);
   
   if (!isValidCategory(category)) {
     throw new HttpError(400, "잘못된 카테고리입니다.");
