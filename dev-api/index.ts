@@ -33,11 +33,11 @@ const startServer = async () => {
     app.use(express.json());
     app.use(cookieParser());
 
+    app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
+    app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
+    app.use("/categories/:category/posts", postsRouter);
     app.use("/auth", authRouter);
     app.use("/users", usersRouter);
-    app.use("/categories/:category/posts", postsRouter);
-    app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
-    app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
     app.use(globalErrorHandler);
 
     const PORT = process.env.PORT || 3000;
