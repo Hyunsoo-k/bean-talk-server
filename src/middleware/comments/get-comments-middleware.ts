@@ -26,7 +26,7 @@ const getCommentsMiddleware = async (
         from: "users",
         localField: "comments.author",
         foreignField: "_id",
-        as: "comments.author"
+        as: "author"
       }
     },
     { $unwind: "$author" },
@@ -43,6 +43,9 @@ const getCommentsMiddleware = async (
       $replaceRoot: { newRoot: "$comments" }
     }
   ]);
+
+  console.log(comments);
+
   if (!comments) {
     throw new HttpError(404, "댓글 목록을 찾을 수 없습니다.");
   }

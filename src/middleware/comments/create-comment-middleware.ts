@@ -14,6 +14,8 @@ const createCommentMiddleware = async (
 ): Promise<void> => {
   const { user_id } = verifyAccessToken(req);
 
+  console.log(user_id)
+
   const { category, post_id } = req.params;
   
   if (!isValidCategory(category)) {
@@ -57,7 +59,7 @@ const createCommentMiddleware = async (
     _id: newNotification_id,
     targetUrl: `/bbs/categories/${category}/post/${post_id}?element_id=${newComment_id}`,
     targetTitle: post.title,
-    triggerdBy: user_id,
+    triggeredBy: user_id,
     type: "댓글",
   });
 
