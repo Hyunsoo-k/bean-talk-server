@@ -40,11 +40,63 @@ const getCommentsMiddleware = async (
       }
     },
     {
+      $lookup: {
+        from: "users",
+        let: { replyAuthors: "$comments.replies.author" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $in: ["$_id", "$$replyAuthors"]
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 1,
+              nickname: 1,
+              profileImageUrl: 1
+            }
+          }
+        ],
+        as: "replyAuthorsData"
+      }
+    },
+    {
+      $addFields: {
+        "comments.replies": {
+          $map: {
+            input: "$comments.replies",
+            as: "reply",
+            in: {
+              $mergeObjects: [
+                "$$reply",
+                {
+                  author: {
+                    $arrayElemAt: [
+                      {
+                        $filter: {
+                          input: "$replyAuthorsData",
+                          as: "ra",
+                          cond: {
+                            $eq: ["$$ra._id", "$$reply.author"]
+                          }
+                        }
+                      },
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
       $replaceRoot: { newRoot: "$comments" }
     }
   ]);
-
-  console.log(comments);
 
   if (!comments) {
     throw new HttpError(404, "댓글 목록을 찾을 수 없습니다.");

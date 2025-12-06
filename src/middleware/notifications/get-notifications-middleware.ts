@@ -10,7 +10,6 @@ const getNotificationsMiddleware = async (
   next: NextFunction
 ): Promise<void> => {
   const { user_id } = verifyAccessToken(req);
-  console.log(user_id);
 
   const notificationContainer = await NotificationContainer
     .findOne({ user_id })
