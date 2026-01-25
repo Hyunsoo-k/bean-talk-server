@@ -13,6 +13,14 @@ const optimizeBbs = async (category: Category, post: Post) => {
     subCategory,
     author,
     title,
+    employmentType,
+    position,
+    payAmount,
+    startTime,
+    endTime,
+    address,
+    latitude,
+    longitude,
     createdAt,
     updatedAt,
   } = post;
@@ -27,7 +35,9 @@ const optimizeBbs = async (category: Category, post: Post) => {
 
   return {
     _id,
-    ...(category !== "thread" && { subCategory }),
+    ...(category !== "thread" && {
+      subCategory
+    }),
     views,
     likes,
     scraps,
@@ -36,6 +46,18 @@ const optimizeBbs = async (category: Category, post: Post) => {
     thumbnailUrl,
     title,
     content: textContent,
+    ...(category === "job" && {
+      employmentType,
+      position,
+      payAmount,
+    }),
+    ...(category === "job" && subCategory === "hiring" && {
+      startTime,
+      endTime,
+      address,
+      latitude,
+      longitude,
+    }),
     createdAt,
     updatedAt,
   };

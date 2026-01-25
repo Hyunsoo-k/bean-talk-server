@@ -4,7 +4,7 @@ const PromotionPostSchema = new mongoose.Schema(
   {
     subCategory: {
       type: String,
-      enum: ["cafe", "deliver"],
+      enum: ["cafe", "delivery"],
       required: true,
     },
     author: {

@@ -10,6 +10,14 @@ type Post = {
   subCategory?: SubCategory; 
   title: string;
   content: string;
+  employmentType?: "partTime" | "fullTime";
+  position?: "barista" | "manager";
+  payAmount?: number;
+  startTime?: string;
+  endTime?: string;
+  address?: string;
+  latitude?: number;
+  longitude?: number;
   commentCount: number;
   likes: mongoose.Types.ObjectId[];
   scraps: mongoose.Types.ObjectId[];

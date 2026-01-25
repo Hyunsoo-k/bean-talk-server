@@ -23,6 +23,44 @@ const JobPostSchema = new mongoose.Schema(
       maxLength: 40,
       trim: true,
     },
+    employmentType: {
+      type: String,
+      enum: ["partTime", "fullTime"],
+      required: true,
+    },
+    position: {
+      type: String,
+      enum: ["barista", "manager"],
+      required: true,
+    },
+    payAmount: {
+      type: Number,
+      required: true,
+    },
+    startTime: {
+      type: String,
+    },
+    endTime: {
+      type: String,
+    },
+    address: {
+      type: String,
+      required: function (this: any) {
+        return this.subCategory === "hiring";
+      },
+    },
+    latitude: {
+      type: Number,
+      required: function (this: any) {
+        return this.subCategory === "hiring";
+      },
+    },
+    longitude: {
+      type: Number,
+      required: function (this: any) {
+        return this.subCategory === "hiring";
+      },
+    },
     content: {
       type: String,
       required: true,

@@ -13,6 +13,7 @@ const getPostsMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  console.log("getPostsMiddleware start!");
   const { category } = req.params;
 
   if (!isValidCategory(category)) {
@@ -30,43 +31,80 @@ const getPostsMiddleware = async (
 
   switch (queryOption) {
     case "title":
-      filter = { title: { $regex: keyword, $options: "i" } };
+      filter = {
+        title: {
+          $regex: keyword,
+          $options: "i"
+        }
+      };
       break;
     case "content":
-      filter = { content: { $regex: keyword, $options: "i" } };
+      filter = {
+        content: {
+          $regex: keyword,
+          $options: "i"
+        }
+      };
       break;
     case "titleAndContent":
-      filter = { $or: [
-          { title: { $regex: keyword, $options: "i" } },
-          { content: { $regex: keyword, $options: "i" } }
+      filter = {
+        $or: [
+          {
+            title: {
+              $regex: keyword,
+              $options: "i"
+            }
+          },
+          {
+            content: {
+              $regex: keyword,
+              $options: "i"
+            }
+          }
         ]
       };
       break;
     case "author":
-      filter = { author: { $regex: keyword, $options: "i" } };
+      filter = {
+        author: {
+          $regex: keyword,
+          $options: "i"
+        }
+      };
       break;
   }
 
   if (subCategory && subCategory!== "all") {
-    filter = { ...filter, subCategory }
+    filter = {
+      ...filter,
+      subCategory
+    }
   }
 
   if (cursor) {
     const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
     filter = {
       ...filter,
-      _id: { $lte: objectIdCursor }
+      _id: {
+        $lte: objectIdCursor
+      }
     };
   }
 
   const limit = 12;
 
   const aggregationPipeline: PipelineStage[] = [
-    { $match: filter },
     {
-      $sort: { _id: -1, }
+      $match: filter,
     },
-    { $limit: limit + 1 },
+    {
+      $sort: {
+        _id: -1,
+      }
+    },
+    {
+      $limit: limit + 1,
+    },
     {
       $lookup: {
         from: "users",
@@ -78,7 +116,7 @@ const getPostsMiddleware = async (
     {
       $unwind: {
         path: "$author",
-        preserveNullAndEmptyArrays: true
+        preserveNullAndEmptyArrays: true,
       }
     },
     {
@@ -92,9 +130,104 @@ const getPostsMiddleware = async (
         content: 1,
         subCategory: {
           $cond: {
-            if: { $ne: ["$subCategory", undefined] },
+            if: {
+              $ne: ["$subCategory", undefined]
+            },
             then: "$subCategory",
             else: "$$REMOVE",
+          }
+        },
+        employmentType: {
+          $cond: {
+            if: {
+              $eq: [category, "job"]
+            },
+            then: "$employmentType",
+            else: "$$REMOVE",
+          }
+        },
+        position: {
+          $cond: {
+            if: {
+              $eq: [category, "job"]
+            },
+            then: "$position",
+            else: "$$REMOVE",
+          }
+        },
+        payAmount: {
+          $cond: {
+            if: {
+              $eq: [category, "job"]
+            },
+            then: "$payAmount",
+            else: "$$REMOVE",
+          }
+        },
+        startTime: {
+          $cond: {
+            if: {
+              $eq: [category, "job"]
+            },
+            then: "$startTime",
+            else: "$$REMOVE",
+          }
+        },
+        endTime: {
+          $cond: {
+            if: {
+              $eq: [category, "job"]
+            },
+            then: "$endTime",
+            else: "$$REMOVE",
+          }
+        },
+        address: {
+          $cond: {
+            if: { 
+              $and: [
+                {
+                  $eq: [category, "job"],
+                },
+                {
+                  $eq: ["$subCategory", "hiring"],
+                }
+              ]
+            },
+            then: "$address",
+            else: "$$REMOVE", 
+          }
+        },
+        latitude: {
+          $cond: {
+            if: { 
+              $and: [
+                {
+                  $eq: [category, "job"],
+                },
+                {
+                  $eq: ["$subCategory", "hiring"],
+                }
+              ]
+            },
+            then: "$latitude",
+            else: "$$REMOVE", 
+          }
+        },
+        longitude: {
+          $cond: {
+            if: { 
+              $and: [
+                {
+                  $eq: [category, "job"],
+                },
+                {
+                  $eq: ["$subCategory", "hiring"],
+                }
+              ]
+            },
+            then: "$longitude",
+            else: "$$REMOVE", 
           }
         },
         views: 1,
