@@ -13,7 +13,6 @@ const getPostsMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log("getPostsMiddleware start!");
   const { category } = req.params;
 
   if (!isValidCategory(category)) {

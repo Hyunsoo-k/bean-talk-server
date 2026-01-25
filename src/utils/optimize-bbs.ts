@@ -50,10 +50,10 @@ const optimizeBbs = async (category: Category, post: Post) => {
       employmentType,
       position,
       payAmount,
-    }),
-    ...(category === "job" && subCategory === "hiring" && {
       startTime,
       endTime,
+    }),
+    ...(category === "job" && subCategory === "hiring" && {
       address,
       latitude,
       longitude,
