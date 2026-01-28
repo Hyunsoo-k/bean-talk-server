@@ -8,6 +8,7 @@ type Post = {
   views: number;
   author: mongoose.Types.ObjectId;
   subCategory?: SubCategory; 
+  thumbanilUrl?: string | null;
   title: string;
   content: string;
   employmentType?: "partTime" | "fullTime";
