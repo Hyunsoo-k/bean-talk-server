@@ -37,7 +37,7 @@ const startServer = async () => {
     app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
     app.use("/categories/:category/posts", postsRouter);
     app.use("/auth", authRouter);
-    app.use("/users", usersRouter);
+    app.use("/me", usersRouter);
     app.use(globalErrorHandler);
 
     const PORT = process.env.PORT || 3000;

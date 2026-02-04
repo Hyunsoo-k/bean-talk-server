@@ -32,7 +32,7 @@ app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", rep
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts", postsRouter);
 app.use("/auth", authRouter);
-app.use("/users", usersRouter);
+app.use("/me", usersRouter);
 app.use(globalErrorHandler);
 
 const connectToDatabase = async () => {
