@@ -20,42 +20,42 @@ const usersRouter = express.Router();
 
 // GET 내 정보 요청
 usersRouter.get(
-  "/me",
+  "/",
   expressAsyncHandler(getUserMeMiddleware),
   expressAsyncHandler(getUserMeController)
 )
 
 // PATCH 내 정보 수정
 usersRouter.patch(
-  "/me",
+  "/",
   expressAsyncHandler(editUserMiddleware),
   expressAsyncHandler(editUserController)
 );
 
 // DELETE 내 정보 삭제
 usersRouter.delete(
-  "/me",
+  "/",
   expressAsyncHandler(deleteUserMiddleware),
   expressAsyncHandler(deleteUserController)
 );
 
 // GET 내 알림 요청
 usersRouter.get(
-  "/me/notifications",
+  "/notifications",
   expressAsyncHandler(getNotificationsMiddleware),
   expressAsyncHandler(getUserNotificationsController)
 );
 
 // PATCH 유저 알림 확인
 usersRouter.patch(
-  "/me/notifications/:notification_id",
+  "/notifications/:notification_id",
   expressAsyncHandler(checkNotificationMiddleware),
   expressAsyncHandler(checkUserNotificationController)
 );
 
 // DELETE 유저 알림 삭제
 usersRouter.delete(
-  "/me/notifications/:notification_id",
+  "/notifications/:notification_id",
   expressAsyncHandler(deleteUserNotificationMiddleware),
   expressAsyncHandler(deleteUserNotificationController)
 );
