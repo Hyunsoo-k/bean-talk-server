@@ -79,7 +79,7 @@ const createReplyMiddleware = async (
         {
           $push: {
             list: {
-              targetUrl: `/bbs/categories/${category}/posts/${post_id}?element_id=${createdReply._id}`,
+              targetUrl: `/categories/${category}/posts/${post_id}?element_id=${createdReply._id}`,
               targetTitle: post.title,
               triggeredBy: user_id,
               type: "답글",

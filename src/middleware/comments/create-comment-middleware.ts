@@ -57,7 +57,7 @@ const createCommentMiddleware = async (
 
   notificationContainer.notifications.push({
     _id: newNotification_id,
-    targetUrl: `/bbs/categories/${category}/post/${post_id}?element_id=${newComment_id}`,
+    targetUrl: `/categories/${category}/posts/${post_id}?element_id=${newComment_id}`,
     targetTitle: post.title,
     triggeredBy: user_id,
     type: "댓글",
