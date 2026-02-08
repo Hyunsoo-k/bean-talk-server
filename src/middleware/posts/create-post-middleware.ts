@@ -4,7 +4,7 @@ import HttpError from "../../error/http-error.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import verifyAccessToken from "../../utils/verify-access-token.js";
 import postModelMap from "../../variables/post-model-map.js";
-import { CommentContainer } from "../../mongoose-models/index.js";
+import { CommentContainer, MyPostContainer } from "../../mongoose-models/index.js";
 
 const createPostMiddleware = async (
   req: Request,
@@ -31,6 +31,14 @@ const createPostMiddleware = async (
     throw new HttpError(500, "댓글 컨테이너 생성을 실퍃였습니다.");
   }
 
+  const myPostContainer = await MyPostContainer.findOne({ user_id });
+  if (!myPostContainer) {
+    throw new HttpError(500, "내 게시글 컨테이너를 찾을 수 없습니다.");
+  }
+
+  myPostContainer.posts.push(newPost);
+  await myPostContainer.save();
+  
   res.locals.newPost = newPost;
 
   next();

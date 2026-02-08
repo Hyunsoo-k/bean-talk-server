@@ -15,6 +15,8 @@ import checkNotificationMiddleware from "../middleware/notifications/check-notif
 import checkUserNotificationController from "../controller/users/check-user-notifications-controller.js";
 import deleteUserNotificationMiddleware from "../middleware/notifications/delete-notification-middleware.js";
 import deleteUserNotificationController from "../controller/users/delete-user-notification-controller.js";
+import getMyPostsMiddleware from "../middleware/users/get-my-posts-middleware.js";
+import getMyPostsController from "../controller/users/get-my-posts-controller.js";
 
 const usersRouter = express.Router();
 
@@ -59,6 +61,20 @@ usersRouter.delete(
   expressAsyncHandler(deleteUserNotificationMiddleware),
   expressAsyncHandler(deleteUserNotificationController)
 );
+
+// GET 내 게시글 목록 요청
+usersRouter.get(
+  "/my-posts",
+  expressAsyncHandler(getMyPostsMiddleware),
+  expressAsyncHandler(getMyPostsController)
+);
+
+// GET 내 스크램 목록 요청
+// usersRouter.get(
+//   "/my-posts",
+//   expressAsyncHandler(deleteUserMiddleware),
+//   expressAsyncHandler(deleteUserController)
+// );
 
 // GET 유저 정보 요청
 usersRouter.get(

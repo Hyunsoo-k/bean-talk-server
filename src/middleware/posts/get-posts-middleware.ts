@@ -250,7 +250,7 @@ const getPostsMiddleware = async (
     posts.pop();
   }
 
-  const unoptimizedPosts = posts.map(async (post: Post) => optimizeBbs(category, post));
+  const unoptimizedPosts = posts.map(async (post: Post) => optimizeBbs(post, category));
   const optimizedPosts = await Promise.all(unoptimizedPosts);
 
   const postsData = {

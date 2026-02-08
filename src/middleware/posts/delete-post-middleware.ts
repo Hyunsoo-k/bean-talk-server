@@ -1,11 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 import HttpError from "../../error/http-error.js";
 import verifyAccessToken from "../../utils/verify-access-token.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import postModelMap from "../../variables/post-model-map.js";
-import { CommentContainer } from "../../mongoose-models/index.js";
+import { CommentContainer, MyPostContainer } from "../../mongoose-models/index.js";
 
 const deletePostMiddleware = async (
   req: Request,
@@ -29,11 +29,26 @@ const deletePostMiddleware = async (
 
   await post.deleteOne();
   
-  const deletedCommentContainer =
-    await CommentContainer.findOneAndDelete({ post_id });
+  const deletedCommentContainer = await CommentContainer.findOneAndDelete({ post_id });
   if (!deletedCommentContainer) {
     throw new HttpError(404, "댓글을 찾을 수 없습니다.");
   }
+
+  const myPostContainer = await MyPostContainer.findOne({ user_id });
+  if (!myPostContainer) {
+    throw new HttpError(500, "내 게시글 컨테이너를 찾을 수 없습니다.");
+  }
+
+  await MyPostContainer.updateOne(
+    { user_id },
+    { 
+      $pull: { 
+        posts: {
+          _id: new Types.ObjectId(post_id as string),
+        } 
+      } 
+    }
+  );
 
   next();
 };

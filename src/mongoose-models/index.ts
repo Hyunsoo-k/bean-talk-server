@@ -8,6 +8,7 @@ import ThreadPostSchema from "./thread-post/index.js";
 import JobPostSchema from "./job-post/index.js";
 import PromotionPostSchema from "./promotion-post/index.js";
 import CommentContainerSchema from "./comment-container/index.js";
+import MyPostContainerSchema from "./my-post-container/index.js";
 
 const User = mongoose.model("User", UserSchema);
 const NotificationContainer = mongoose.model("NotificationContainer", NotificationContainerSchema);
@@ -17,6 +18,7 @@ const ThreadPost = mongoose.model("ThreadPost", ThreadPostSchema);
 const JobPost = mongoose.model("JobPost", JobPostSchema);
 const PromotionPost = mongoose.model("PromotionPost", PromotionPostSchema);
 const CommentContainer = mongoose.model("CommentContainer", CommentContainerSchema);
+const MyPostContainer = mongoose.model("MyPostContainer", MyPostContainerSchema);
 
 export {
   User,
@@ -26,5 +28,6 @@ export {
   ThreadPost,
   JobPost,
   PromotionPost,
-  CommentContainer
+  CommentContainer,
+  MyPostContainer
 };

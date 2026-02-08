@@ -1,9 +1,9 @@
 import * as cheerio from "cheerio";
 
-import type { Category } from "../types/category.js";
 import type { Post } from "../types/post.js";
+import type { Category } from "../types/category.js";
 
-const optimizeBbs = async (category: Category, post: Post) => {
+const optimizeBbs = async (post: Post, category?: Category, ) => {
   const {
     _id,
     views,
@@ -35,7 +35,7 @@ const optimizeBbs = async (category: Category, post: Post) => {
 
   return {
     _id,
-    ...(category !== "thread" && {
+    ...(category && (category !== "thread") && {
       subCategory
     }),
     views,

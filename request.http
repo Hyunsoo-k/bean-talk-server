@@ -13,8 +13,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user1@beantalk.com",
-  "password": "user1user1"
+  "email": "beantalk@beantalk.com",
+  "password": "beantalk95"
 }
 
 ### GET 내 정보
@@ -42,13 +42,18 @@ Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhiZmYxY2NlYzUzYzcxYmJiOGQ2MDRhIiwiaWF0IjoxNzU3NDExOTkwLCJleHAiOjE3NTc0OTgzOTB9.SoUkVMHV3HI3-S6feG8mlQrRYeXynDvbBq9pGjVeDjI
 
 ### GET 알림
-GET http://localhost:3000/users/notifications
+GET http://localhost:3000/users/me/notifications
 Content-Type: application/json
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDIxODY1MzNiZWQwMjZmODU1YWU4IiwiaWF0IjoxNzU3OTg5OTA5LCJleHAiOjE3NTgwNzYzMDl9.RwYXJs3n799hhymXhHa_j72UOgdtwqLbfv5T_e703qE
 
 ### PATCH 알림
 
 ### DELETE 알림
+
+### GET 내 게시글 목록
+GET http://localhost:3000/me/my-posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
 
 ### GET 게시글 목록
 GET http://localhost:3000/categories/job/posts
@@ -59,13 +64,30 @@ GET http://localhost:3000/categories/news/posts/6915e564522049208a62d939
 Content-Type: application/json
 
 ### CREATE 게시글
-POST http://localhost:3000/bbs/categories/thread/posts
+POST http://localhost:3000/categories/promotion/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjZmQ1ODMyMjQ3MWJkN2Q4YTFmYjQ0IiwiaWF0IjoxNzYxNDEwNTE2LCJleHAiOjE3NjE0OTY5MTZ9.XMZ1LlXAT9Q7-FLaV3rqNjaE6Ezy586JbEw1Qth7-gI
-  
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
+
 {
-  "title": "댓글분리1댓글분리1",
-  "content": "댓글분리1댓글분리1댓글분리1"
+  "subCategory": "cafe",
+  "title": "게시글 테스트 1",
+  "content": "게시글 테스트 1"
+}
+
+### CREATE 게시글 (JOB)
+POST http://localhost:3000/categories/job/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzY5MzMxMDY5LCJleHAiOjE3Njk0MTc0Njl9.v4Jn_iCQGxQc27jIhCPhpurmZyfKmmpw2IbuX5Pz3Mk
+
+{
+  "subCategory": "seeking",
+  "title": "job 게시글 테스트(seeking) 2",
+  "content": "job 게시글 테스트(seeking) 2",
+  "employmentType": "partTime",
+  "position": "barista",
+  "payAmount": 12000,
+  "startTime": "12:00",
+  "endTime": "18: 00"
 }
 
 ### PATCH 게시글
@@ -79,21 +101,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
 }
 
 ### DELETE 게시글
-DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d93d
+DELETE http://localhost:3000/categories/promotion/posts/69883779072481095aa73189
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
 
 ### GET 댓글 목록
-GET http://localhost:3000/categories/news/posts/6915e564522049208a62d939/comments
+GET http://localhost:3000/categories/thread/posts/6931ff6f8c64ac8489acc69a/comments
 Content-Type: application/json
 
 ### CREATE 댓글
-POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments
+POST http://localhost:3000/categories/news/posts/6926c3213ca20e3b42f09394/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzc0Nzc4LCJleHAiOjE3NjM0NjExNzh9.cpEIEatWEkHwed3kIJrSdh9Jl28LOXQumutVNWDi54k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzY0NTMwMjgyLCJleHAiOjE3NjQ2MTY2ODJ9.d0SYa7-AsJRXmJ5R-i6slyEhR1gY0vuvn3vntUY6SFc
 
 {
-  "content": "댓글 테스트 5"
+  "content": "댓글 테스트 1"
 }
 
 ### PATCH 댓글
@@ -111,9 +133,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
 
 ### CREATE 답글
-POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691af6cb0d5b27433afbf8ca/replies
+POST http://localhost:3000/categories/news/posts/6926c3213ca20e3b42f09394/comments/692763d30a8274ae5d65c33e/replies
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzc2MjAzLCJleHAiOjE3NjM0NjI2MDN9.XUXF1DvcpaJAB0kOLHQ3pMNaH8LKLkbp6h2EXvCYnrQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzY0NTMwMjgyLCJleHAiOjE3NjQ2MTY2ODJ9.d0SYa7-AsJRXmJ5R-i6slyEhR1gY0vuvn3vntUY6SFc
 
 {
   "content": "답글 테스트 1"
@@ -128,8 +150,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
   "content": "답글 테스트 1 (수정 1)"
 }
 
-
-### DELETE 답글
 
 ### CREATE 좋아요
 POST http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/likes
@@ -150,3 +170,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
 DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/scraps
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs
+
+### GET 알림목록
+GET http://localhost:3000/me/notifications
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwMjM1MjAyLCJleHAiOjE3NzAzMjE2MDJ9.O5dNkHSSHgdw5KLjen_bD1zW2NS9dojUAb3swUES5e4
