@@ -5,8 +5,9 @@ import verifyAccessToken from "../../utils/verify-access-token.js";
 import isValidCategory from "../../utils/is-valid-category.js";
 import HttpError from "../../error/http-error.js";
 import postModelMap from "../../variables/post-model-map.js";
+import { MyScrapContainer } from "../../mongoose-models/index.js";
 
-const createScrapMiddleware = async (
+const toggleScrapMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -24,18 +25,36 @@ const createScrapMiddleware = async (
     throw new HttpError(404, "게시글을 찾을 수 없습니다.");
   }
 
-  const isExists = post.scraps.some(
+  const isScrapped = post.scraps.some(
     (userWhoScraped: mongoose.Types.ObjectId) => userWhoScraped.equals(user_id)
   );
-  if (isExists) {
-    throw new HttpError(409, "이미 스크랩을 한 상태입니다.");
+
+  const myScrapContainer = await MyScrapContainer.findOne({ user_id });
+  if (!myScrapContainer) {
+    throw new HttpError(404, "스크랩 컨테이너를 찾을 수 없습니다.");
   }
 
-  post.scraps.push(user_id);
-
-  await post.save();
+  if (isScrapped) {
+    post.scraps.pull(user_id);
+    myScrapContainer.posts = myScrapContainer.posts.filter(
+      (scrapPost: any) => scrapPost._id.toString() !== post_id
+    );
+    
+    await Promise.all([
+      post.save(),
+      myScrapContainer.save()
+    ]);
+  } else if (!isScrapped) {
+    post.scraps.push(user_id);
+    myScrapContainer.posts.push(post);
+    
+    await Promise.all([
+      post.save(),
+      myScrapContainer.save()
+    ]);
+  }
 
   next();
 };
 
-export default createScrapMiddleware;
+export default toggleScrapMiddleware;

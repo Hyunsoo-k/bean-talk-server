@@ -15,6 +15,8 @@ import {
   editPostController,
   deletePostController
 } from "../controller/posts/index.js";
+import toggleScrapMiddleware from "../middleware/scraps/toggleScrapMiddleware.js";
+import toggleScrapController from "../controller/scraps/toggle-scrap-controller.js";
 
 const postsRouter = express.Router({ mergeParams: true });
 
@@ -51,6 +53,13 @@ postsRouter.delete(
   "/:post_id",
   expressAsyncHandler(deletePostMiddleware),
   expressAsyncHandler(deletePostController)
+);
+
+// PATCH 게시글 스크랩 토글
+postsRouter.patch(
+  "/:post_id/scraps",
+  expressAsyncHandler(toggleScrapMiddleware),
+  expressAsyncHandler(toggleScrapController)
 );
 
 export default postsRouter;

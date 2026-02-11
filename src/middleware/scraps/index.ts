@@ -1,4 +1,3 @@
-import createScrapMiddleware from "./create-scrap-middleware.js";
-import deleteScrapMiddleware from "./delete-scrap-middleware.js";
+import toggleScrapMiddleware from "./toggleScrapMiddleware.js";
 
-export { createScrapMiddleware, deleteScrapMiddleware };
+export { toggleScrapMiddleware };

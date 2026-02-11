@@ -70,11 +70,11 @@ usersRouter.get(
 );
 
 // GET 내 스크램 목록 요청
-// usersRouter.get(
-//   "/my-posts",
-//   expressAsyncHandler(deleteUserMiddleware),
-//   expressAsyncHandler(deleteUserController)
-// );
+usersRouter.get(
+  "/my-posts",
+  expressAsyncHandler(deleteUserMiddleware),
+  expressAsyncHandler(deleteUserController)
+);
 
 // GET 유저 정보 요청
 usersRouter.get(
