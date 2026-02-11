@@ -166,6 +166,11 @@ PATCH http://localhost:3000/categories/promotion/posts/698afa25084b8ce6007d16f4/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwODMzMzk3LCJleHAiOjE3NzA5MTk3OTd9.ECt-moiNuc-WUF-ERxChSNARGeCHecRqYArcdq5DYMo
 
+### GET 내 스크랩
+GET http://localhost:3000/me/scraps
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwODMzMzk3LCJleHAiOjE3NzA5MTk3OTd9.ECt-moiNuc-WUF-ERxChSNARGeCHecRqYArcdq5DYMo
+
 ### GET 알림목록
 GET http://localhost:3000/me/notifications
 Content-Type: application/json

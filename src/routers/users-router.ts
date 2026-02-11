@@ -17,6 +17,8 @@ import deleteUserNotificationMiddleware from "../middleware/notifications/delete
 import deleteUserNotificationController from "../controller/users/delete-user-notification-controller.js";
 import getMyPostsMiddleware from "../middleware/users/get-my-posts-middleware.js";
 import getMyPostsController from "../controller/users/get-my-posts-controller.js";
+import getMyScrapsMiddleware from "../middleware/users/get-my-scraps-middleware.js";
+import getMyScrapsController from "../controller/users/get-my-scraps-controller.js";
 
 const usersRouter = express.Router();
 
@@ -69,11 +71,11 @@ usersRouter.get(
   expressAsyncHandler(getMyPostsController)
 );
 
-// GET 내 스크램 목록 요청
+// GET 내 스크랩 목록 요청
 usersRouter.get(
-  "/my-posts",
-  expressAsyncHandler(deleteUserMiddleware),
-  expressAsyncHandler(deleteUserController)
+  "/scraps",
+  expressAsyncHandler(getMyScrapsMiddleware),
+  expressAsyncHandler(getMyScrapsController)
 );
 
 // GET 유저 정보 요청

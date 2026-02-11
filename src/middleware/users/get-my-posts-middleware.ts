@@ -32,7 +32,9 @@ const getMyPostsMiddleware = async (
     const objectIdCursor = new Types.ObjectId(cursor as string);
     pipeline.push({
       $match: {
-        "posts._id": { $lt: objectIdCursor },
+        "posts._id": {
+          $lt: objectIdCursor
+        },
       },
     });
   }
