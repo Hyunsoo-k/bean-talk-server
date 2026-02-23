@@ -4,7 +4,12 @@ import jwt from "jsonwebtoken";
 
 import HttpError from "../error/http-error.js";
 
-const globalErrorHandler = (err: Error, req: Request, res: Response, next: NextFunction): any => {
+const globalErrorHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any => {
   if (err instanceof jwt.TokenExpiredError) {
     return res.status(401).send({ message: "토큰이 만료되었습니다."});
   } else if (err instanceof jwt.JsonWebTokenError) {

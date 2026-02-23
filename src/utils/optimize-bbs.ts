@@ -3,64 +3,42 @@ import * as cheerio from "cheerio";
 import type { Post } from "../types/post.js";
 import type { Category } from "../types/category.js";
 
-const optimizeBbs = async (post: Post, category?: Category, ) => {
-  const {
-    _id,
-    views,
-    likes,
-    scraps,
-    commentCount,
-    subCategory,
-    author,
-    title,
-    employmentType,
-    position,
-    payAmount,
-    startTime,
-    endTime,
-    address,
-    latitude,
-    longitude,
-    createdAt,
-    updatedAt,
-  } = post;
-
+const optimizePosts = async (post: Post, category?: Category, ) => {
   const $ = cheerio.load(post.content || "");
 
   const firstImage = $("img").first();
-
   const thumbnailUrl = firstImage.length ? firstImage.attr("src") : null;
   
   const textContent = $("body").text().trim().slice(0, 700);
 
   return {
-    _id,
+    _id: post._id,
     ...(category && (category !== "thread") && {
-      subCategory
+      subCategory: post.subCategory
     }),
-    views,
-    likes,
-    scraps,
-    commentCount,
-    author,
+    views: post.views,
+    likes: post.likes,
+    scraps: post.scraps,
+    commentCount: post.commentCount,
+    author: post.author,
     thumbnailUrl,
-    title,
+    title: post.title,
     content: textContent,
     ...(category === "job" && {
-      employmentType,
-      position,
-      payAmount,
-      startTime,
-      endTime,
+      employmentType: post.employmentType,
+      position: post.position,
+      payAmount: post.payAmount,
+      startTime: post.startTime,
+      endTime: post.endTime,
     }),
-    ...(category === "job" && subCategory === "hiring" && {
-      address,
-      latitude,
-      longitude,
+    ...(category === "job" && post.subCategory === "hiring" && {
+      address: post.address,
+      latitude: post.latitude,
+      longitude: post.longitude,
     }),
-    createdAt,
-    updatedAt,
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
   };
 };
 
-export default optimizeBbs;
+export default optimizePosts;

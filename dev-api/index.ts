@@ -4,11 +4,13 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import authRouter from "../src/routers/auth-router.js";
-import usersRouter from "../src/routers/users-router.js";
-import postsRouter from "../src/routers/posts-router.js";
-import commentsRouter from "../src/routers/comments-router.js";
-import repliesRouter from "../src/routers/replies.router.js";
+import {
+  authRouter,
+  usersRouter,
+  postsRouter,
+  commentsRouter,
+  repliesRouter
+} from "../src/routers/index.js"
 
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 

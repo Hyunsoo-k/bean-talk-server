@@ -1,88 +1,79 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 
-import getUserMiddleware from "../middleware/users/get-user-middleware.js";
-import getUserController from "../controller/users/get-user-controller.js";
-import getUserMeMiddleware from "../middleware/users/get-user-me-middleware.js";
-import getUserMeController from "../controller/users/get-user-me-controller.js";
-import editUserMiddleware from "../middleware/users/edit-user-middleware.js";
-import editUserController from "../controller/users/edit-user-controller.js";
-import deleteUserMiddleware from "../middleware/users/delete-user-middleware.js";
-import deleteUserController from "../controller/users/delete-user-controller.js";
-import getNotificationsMiddleware from "../middleware/notifications/get-notifications-middleware.js";
-import getUserNotificationsController from "../controller/users/get-user-notifications-controller.js";
-import checkNotificationMiddleware from "../middleware/notifications/check-notification-middleware.js";
-import checkUserNotificationController from "../controller/users/check-user-notifications-controller.js";
-import deleteUserNotificationMiddleware from "../middleware/notifications/delete-notification-middleware.js";
-import deleteUserNotificationController from "../controller/users/delete-user-notification-controller.js";
-import getMyPostsMiddleware from "../middleware/users/get-my-posts-middleware.js";
-import getMyPostsController from "../controller/users/get-my-posts-controller.js";
-import getMyScrapsMiddleware from "../middleware/users/get-my-scraps-middleware.js";
-import getMyScrapsController from "../controller/users/get-my-scraps-controller.js";
+import {
+  validateUserMe,
+  verifyAccessToken
+} from "../middlewares/index.js";
+import {
+  getUserMe,
+  editUserMe,
+  deleteUserMe,
+  getNotifications,
+  checkNotification,
+  deleteNotification,
+  getMyPosts,
+  getMyScraps
+} from "../controllers/users/index.js";
+
 
 const usersRouter = express.Router();
 
 // GET 내 정보 요청
 usersRouter.get(
   "/",
-  expressAsyncHandler(getUserMeMiddleware),
-  expressAsyncHandler(getUserMeController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(getUserMe)
 )
 
 // PATCH 내 정보 수정
 usersRouter.patch(
   "/",
-  expressAsyncHandler(editUserMiddleware),
-  expressAsyncHandler(editUserController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(validateUserMe),
+  expressAsyncHandler(editUserMe)
 );
 
 // DELETE 내 정보 삭제
 usersRouter.delete(
   "/",
-  expressAsyncHandler(deleteUserMiddleware),
-  expressAsyncHandler(deleteUserController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(deleteUserMe)
 );
 
 // GET 내 알림 요청
 usersRouter.get(
   "/notifications",
-  expressAsyncHandler(getNotificationsMiddleware),
-  expressAsyncHandler(getUserNotificationsController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(getNotifications)
 );
 
 // PATCH 유저 알림 확인
 usersRouter.patch(
   "/notifications/:notification_id",
-  expressAsyncHandler(checkNotificationMiddleware),
-  expressAsyncHandler(checkUserNotificationController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(checkNotification)
 );
 
 // DELETE 유저 알림 삭제
 usersRouter.delete(
   "/notifications/:notification_id",
-  expressAsyncHandler(deleteUserNotificationMiddleware),
-  expressAsyncHandler(deleteUserNotificationController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(deleteNotification),
 );
 
 // GET 내 게시글 목록 요청
 usersRouter.get(
   "/my-posts",
-  expressAsyncHandler(getMyPostsMiddleware),
-  expressAsyncHandler(getMyPostsController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(getMyPosts)
 );
 
 // GET 내 스크랩 목록 요청
 usersRouter.get(
   "/scraps",
-  expressAsyncHandler(getMyScrapsMiddleware),
-  expressAsyncHandler(getMyScrapsController)
-);
-
-// GET 유저 정보 요청
-usersRouter.get(
-  "/:user_id",
-  expressAsyncHandler(getUserMiddleware),
-  expressAsyncHandler(getUserController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(getMyScraps)
 );
 
 export default usersRouter;

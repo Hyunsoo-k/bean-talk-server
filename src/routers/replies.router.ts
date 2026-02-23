@@ -2,38 +2,42 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 
 import {
-  createReplyMiddleware,
-  editReplyMiddleware,
-  deleteReplyMiddleware
-} from "../middleware/replies/index.js";
-
+  verifyAccessToken,
+  validateCategory,
+  validateComment
+} from "../middlewares/index.js";
 import { 
-  createReplyController,
-  editReplyController,
-  deleteReplyController
-} from "../controller/replies/index.js";
+  createReply,
+  editReply,
+  deleteReply
+} from "../controllers/replies/index.js";
 
 const repliesRouter = express.Router({ mergeParams: true });
 
 // CREATE 답글
 repliesRouter.post(
   "/",
-  expressAsyncHandler(createReplyMiddleware),
-  expressAsyncHandler(createReplyController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(validateCategory),
+  expressAsyncHandler(validateComment),
+  expressAsyncHandler(createReply)
 );
 
 // EDIT 답글
 repliesRouter.patch(
   "/:reply_id",
-  expressAsyncHandler(editReplyMiddleware),
-  expressAsyncHandler(editReplyController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(validateCategory),
+  expressAsyncHandler(validateComment),
+  expressAsyncHandler(editReply)
 );
 
 // DELETE 답글
 repliesRouter.delete(
   "/:reply_id",
-  expressAsyncHandler(deleteReplyMiddleware),
-  expressAsyncHandler(deleteReplyController)
+  expressAsyncHandler(verifyAccessToken),
+  expressAsyncHandler(validateCategory),
+  expressAsyncHandler(deleteReply)
 );
 
 export default repliesRouter;

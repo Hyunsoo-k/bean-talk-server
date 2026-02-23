@@ -3,9 +3,9 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "user1@beantalk.com",
-  "nickname": "user1",
-  "password": "user1user1"
+  "email": "user2@beantalk.com",
+  "nickname": "user2",
+  "password": "user2user2"
 }
 
 ### 로그인
@@ -13,8 +13,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "beantalk@beantalk.com",
-  "password": "beantalk95"
+  "email": "user3@beantalk.com",
+  "password": "user3user3"
 }
 
 ### GET 내 정보
@@ -56,22 +56,22 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
 
 ### GET 게시글 목록
-GET http://localhost:3000/categories/job/posts
+GET http://localhost:3000/categories/promotion/posts
 Content-Type: application/json
 
 ### GET 게시글
-GET http://localhost:3000/categories/news/posts/6915e564522049208a62d939
+GET http://localhost:3000/categories/promotion/posts/6990cd385ed2affedea7aad3
 Content-Type: application/json
 
 ### CREATE 게시글
 POST http://localhost:3000/categories/promotion/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcxNjcwNDU0LCJleHAiOjE3NzE3NTY4NTR9.EJCNv9Q3ttue2IWcr1TkpvTTOsY2xu0Opm6v_vI55Jg
 
 {
   "subCategory": "cafe",
-  "title": "게시글 테스트 1",
-  "content": "게시글 테스트 1"
+  "title": "프로모션 게시글 작성 1",
+  "content": "프로모션 게시글 작성 1"
 }
 
 ### CREATE 게시글 (JOB)
@@ -91,13 +91,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
 }
 
 ### PATCH 게시글
-PATCH http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939
+PATCH http://localhost:3000/categories/promotion/posts/6990cd385ed2affedea7aad3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzYzMDQyMTQ1LCJleHAiOjE3NjMxMjg1NDV9.wXC4Qk_TnuIKPh1BTLa2rg96ArfkQ9IH-8NCMrhVUwU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcxMDk3MDc1LCJleHAiOjE3NzExODM0NzV9.ENhfoWnv1lv8eXHNKuMXV3_1ZMHTflBPr2fQJL3D-4Q
 
 {
-  "title": "news 게시글 테스트 1 (수정)",
-  "content": "news 게시글 테스트 1 (수정)"
+  "title": "게시글 테스트 1 (수정)",
+  "content": "게시글 테스트 1 (수정)"
 }
 
 ### DELETE 게시글
@@ -110,12 +110,12 @@ GET http://localhost:3000/categories/thread/posts/6931ff6f8c64ac8489acc69a/comme
 Content-Type: application/json
 
 ### CREATE 댓글
-POST http://localhost:3000/categories/news/posts/6926c3213ca20e3b42f09394/comments
+POST http://localhost:3000/categories/promotion/posts/69998be5ef7efe522b7e3cf1/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzY0NTMwMjgyLCJleHAiOjE3NjQ2MTY2ODJ9.d0SYa7-AsJRXmJ5R-i6slyEhR1gY0vuvn3vntUY6SFc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjk5OThhNWQ2MzE4MzVkMWM3MWI5YWMyIiwiaWF0IjoxNzcxODM4NDQ3LCJleHAiOjE3NzE5MjQ4NDd9.MyjwN-zx0A2uVtJJFzztwUQdHM6-sqMNWhSgLcgah_I
 
 {
-  "content": "댓글 테스트 1"
+  "content": "댓글 테스트 user2"
 }
 
 ### PATCH 댓글
@@ -128,17 +128,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
 }
 
 ### DELETE 댓글
-DELETE http://localhost:3000/bbs/categories/news/posts/6915e564522049208a62d939/comments/691643d56c6601ff4661265e
+DELETE http://localhost:3000/bbs/categories/news/posts/69998be5ef7efe522b7e3cf1/comments/6914ea4ee99b54d499889a1a
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMTQxNDE1LCJleHAiOjE3NjMyMjc4MTV9.8KlyXx2M-d3zafc_BXfaJEHQMhdpbxPBzMovmJy6xZg
 
 ### CREATE 답글
-POST http://localhost:3000/categories/news/posts/6926c3213ca20e3b42f09394/comments/692763d30a8274ae5d65c33e/replies
+POST http://localhost:3000/categories/promotion/posts/69998be5ef7efe522b7e3cf1/comments/699c1be4ce67c9dd87f1a743/replies
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzY0NTMwMjgyLCJleHAiOjE3NjQ2MTY2ODJ9.d0SYa7-AsJRXmJ5R-i6slyEhR1gY0vuvn3vntUY6SFc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjk5OThhNWQ2MzE4MzVkMWM3MWI5YWMyIiwiaWF0IjoxNzcxODM4NDQ3LCJleHAiOjE3NzE5MjQ4NDd9.MyjwN-zx0A2uVtJJFzztwUQdHM6-sqMNWhSgLcgah_I
 
 {
-  "content": "답글 테스트 1"
+  "content": "답글 테스트 user2"
 }
 
 ### PATCH 답글
@@ -162,9 +162,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhNGVlOTliNTRkNDk5ODg5YTFhIiwiaWF0IjoxNzYzMzA4MjEyLCJleHAiOjE3NjMzOTQ2MTJ9.06rbad4yjdcWSKDimvsD6CD9j9qpbIE_dJ0489rJEPs
 
 ### PATCH 토글 스크랩
-PATCH http://localhost:3000/categories/promotion/posts/698afa25084b8ce6007d16f4/scraps
+PATCH http://localhost:3000/categories/promotion/posts/69998be5ef7efe522b7e3cf1/scraps
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwODMzMzk3LCJleHAiOjE3NzA5MTk3OTd9.ECt-moiNuc-WUF-ERxChSNARGeCHecRqYArcdq5DYMo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjk5OThhNWQ2MzE4MzVkMWM3MWI5YWMyIiwiaWF0IjoxNzcxODM4NDQ3LCJleHAiOjE3NzE5MjQ4NDd9.MyjwN-zx0A2uVtJJFzztwUQdHM6-sqMNWhSgLcgah_I
 
 ### GET 내 스크랩
 GET http://localhost:3000/me/scraps

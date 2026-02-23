@@ -1,6 +1,8 @@
-export const categoryArray = ["thread", "promotion", "job", "news", "notice"] as const;
-export type Category = typeof categoryArray[number];
+import type { Category } from "../types/category.js";
+import CATEGORIES from "./categories.js";
 
-export function isCategory(value: any): value is Category {
-  return categoryArray.includes(value as Category);
-}
+const isCategory = (value: any): value is Category => {
+  return CATEGORIES.includes(value as Category);
+};
+
+export default isCategory;

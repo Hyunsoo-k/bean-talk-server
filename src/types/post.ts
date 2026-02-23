@@ -7,8 +7,9 @@ type Post = {
   _id: mongoose.Types.ObjectId;
   views: number;
   author: mongoose.Types.ObjectId;
+  category: "news" | "thread" | "promotion" | "job" | "notice";
   subCategory?: SubCategory; 
-  thumbanilUrl?: string | null;
+  thumbnailUrl?: string | null;
   title: string;
   content: string;
   employmentType?: "partTime" | "fullTime";
