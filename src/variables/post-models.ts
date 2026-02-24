@@ -8,9 +8,9 @@ import {
   Promotion
 } from "../mongoose-models/index.js";
 
-type PostCategory = "news" | "notice" | "thread" | "promotion" | "job";
+type Category = "news" | "notice" | "thread" | "promotion" | "job";
 
-const POST_MODELS: Record<PostCategory, Model<any, any, any>> = {
+const POST_MODELS: Record<Category, Model<any, any, any>> = {
   "news": News,
   "notice": Notice,
   "thread": Thread,

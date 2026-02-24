@@ -13,8 +13,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user3@beantalk.com",
-  "password": "user3user3"
+  "email": "beantalk@beantalk.com",
+  "password": "beantalk95"
 }
 
 ### GET 내 정보
@@ -53,10 +53,10 @@ Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDI
 ### GET 내 게시글 목록
 GET http://localhost:3000/me/my-posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcxOTE2Mzk1LCJleHAiOjE3NzIwMDI3OTV9.FoWeKEs9C4TOpPyqrsjtTbTLS1dAoXJMNkjp3VmLch0
 
 ### GET 게시글 목록
-GET http://localhost:3000/categories/promotion/posts
+GET http://localhost:3000/categories/notice/posts
 Content-Type: application/json
 
 ### GET 게시글

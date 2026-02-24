@@ -7,7 +7,7 @@ import { MyPostContainer } from "../../mongoose-models/index.js";
 const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   const { user_id } = req.payload!;
 
-  const { cursor } = req.query;
+  const { cursor } = req.query as { cursor: string };
   
   const limit = 12;
 
@@ -23,11 +23,10 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   ];
 
   if (cursor) {
-    const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
     pipeline.push({
       $match: {
         "posts._id": {
-          $lt: objectIdCursor
+          $lt: new mongoose.Types.ObjectId(cursor)
         },
       },
     });
