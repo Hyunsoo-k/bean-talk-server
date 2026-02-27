@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
+import mongoose, { PipelineStage } from "mongoose";
 
 import optimizePosts from "../../utils/optimize-bbs.js";
-import { MyPostContainer } from "../../mongoose-models/index.js";
+import { MyPostContainer, Post } from "../../mongoose-models/index.js";
 
 const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   const { user_id } = req.payload!;
@@ -11,42 +11,47 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   
   const limit = 12;
 
-  const pipeline: any[] = [
+  const matchFilter: any = {
+    user_id: new mongoose.Types.ObjectId(user_id),
+  };
+
+  if (cursor) {
+    matchFilter.posts = {
+      $lte: new mongoose.Types.ObjectId(cursor),
+    };
+  }
+
+  const pipeline: PipelineStage[] = [
     {
-      $match: {
-        user_id: new mongoose.Types.ObjectId(user_id)
+      $match: matchFilter,
+    },
+    {
+      $sort: {
+        _id: -1,
       }
     },
     {
-      $unwind: "$posts"
-    }
-  ];
-
-  if (cursor) {
-    pipeline.push({
-      $match: {
-        "posts._id": {
-          $lt: new mongoose.Types.ObjectId(cursor)
-        },
-      },
-    });
-  }
-
-  pipeline.push(
-    {
-      $sort: {
-        "posts._id": -1,
-      },
+      $limit: limit + 1,
     },
     {
-      $limit: limit + 1
+      $lookup: {
+        from: "posts",
+        localField: "posts",
+        foreignField: "_id",
+        as: "posts",
+      }
+    },
+    {
+      $unwind: {
+        path: "$posts",
+      }
     },
     {
       $replaceRoot: {
         newRoot: "$posts",
-      },
+      }
     }
-  );
+  ];
 
   const myPosts = await MyPostContainer.aggregate(pipeline);
 

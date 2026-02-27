@@ -13,6 +13,7 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
 
   return {
     _id: post._id,
+    category: post.category,
     ...(category && (category !== "thread") && {
       subCategory: post.subCategory
     }),
