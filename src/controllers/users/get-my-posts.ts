@@ -26,14 +26,6 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
       $match: matchFilter,
     },
     {
-      $sort: {
-        _id: -1,
-      }
-    },
-    {
-      $limit: limit + 1,
-    },
-    {
       $lookup: {
         from: "posts",
         localField: "posts",
@@ -50,7 +42,15 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
       $replaceRoot: {
         newRoot: "$posts",
       }
-    }
+    },
+    {
+      $sort: {
+        _id: -1,
+      }
+    },
+    {
+      $limit: limit + 1,
+    },
   ];
 
   const myPosts = await MyPostContainer.aggregate(pipeline);
