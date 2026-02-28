@@ -221,6 +221,7 @@ const getPosts = async (req: Request, res: Response) => {
         },
         views: 1,
         likes: 1,
+        scraps: 1,
         commentCount: 1,
         createdAt: 1,
         updatedAt: 1,
