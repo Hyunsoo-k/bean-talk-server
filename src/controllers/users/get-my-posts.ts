@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import mongoose, { PipelineStage } from "mongoose";
+import mongoose from "mongoose";
 
 import optimizePosts from "../../utils/optimize-bbs.js";
-import { MyPostContainer, Post } from "../../mongoose-models/index.js";
+import { MyPostContainer } from "../../mongoose-models/index.js";
 
 const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   const { user_id } = req.payload!;
@@ -11,19 +11,11 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
   
   const limit = 12;
 
-  const matchFilter: any = {
-    user_id: new mongoose.Types.ObjectId(user_id),
-  };
-
-  if (cursor) {
-    matchFilter.posts = {
-      $lte: new mongoose.Types.ObjectId(cursor),
-    };
-  }
-
-  const pipeline: PipelineStage[] = [
+  const pipeline: mongoose.PipelineStage[] = [
     {
-      $match: matchFilter,
+      $match: {
+        user_id: new mongoose.Types.ObjectId(user_id),
+      },
     },
     {
       $lookup: {
@@ -43,6 +35,18 @@ const getMyPosts = async (req: Request, res: Response): Promise<any> => {
         newRoot: "$posts",
       }
     },
+    ...(cursor 
+        ? [
+            {
+              $match: {
+                _id: {
+                  $lt: new mongoose.Types.ObjectId(cursor),
+                }
+              }
+            }
+          ]
+        : []
+      ),
     {
       $sort: {
         _id: -1,
