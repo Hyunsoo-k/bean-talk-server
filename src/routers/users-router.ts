@@ -71,7 +71,7 @@ usersRouter.get(
 
 // GET 내 스크랩 목록 요청
 usersRouter.get(
-  "/scraps",
+  "/my-scraps",
   expressAsyncHandler(verifyAccessToken),
   expressAsyncHandler(getMyScraps)
 );
