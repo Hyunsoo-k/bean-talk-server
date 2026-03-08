@@ -53,4 +53,40 @@ UserSchema.pre("save", async function (): Promise<void> {
   }
 });
 
+async function checkDuplicate(this: any) {
+  const Model = this.model;
+  const update = this.getUpdate() as any;
+  const query = this.getQuery();
+
+  if (!update) {
+    return;
+  }
+
+  const data = update.$set ?? update;
+
+  const current = await Model.findOne(query);
+  if (!current) {
+    return;
+  }
+
+  if (data.email) {
+    const sameEmailUser = await Model.findOne({ email: data.email });
+
+    if (sameEmailUser && !sameEmailUser._id.equals(current._id)) {
+      throw new HttpError(400, "이미 존재하는 이메일 입니다.");
+    }
+  }
+
+  if (data.nickname) {
+    const sameNicknameUser = await Model.findOne({ nickname: data.nickname });
+
+    if (sameNicknameUser && !sameNicknameUser._id.equals(current._id)) {
+      throw new HttpError(400, "이미 존재하는 닉네임 입니다.");
+    }
+  }
+}
+
+UserSchema.pre("findOneAndUpdate", checkDuplicate);
+UserSchema.pre("updateOne", checkDuplicate);
+
 export default UserSchema;
