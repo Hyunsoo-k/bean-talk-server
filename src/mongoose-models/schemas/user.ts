@@ -2,6 +2,7 @@ import type { Model } from "mongoose";
 import mongoose from "mongoose";
 
 import HttpError from "../../error/http-error.js";
+import { User } from "../../types/user.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -39,7 +40,7 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.pre("save", async function (): Promise<void> {
-  const Model = this.constructor as Model<Document>;
+  const Model = this.constructor as Model<User>;
 
   const sameEmailUser = await Model.findOne({ email: this.email });
   if (sameEmailUser && !sameEmailUser._id.equals(this._id)) {
