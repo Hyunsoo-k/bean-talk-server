@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts", postsRouter);
-app.use("/integratedPosts", integratedPostsRouter);
+app.use("/integrated-posts", integratedPostsRouter);
 app.use("/auth", authRouter);
 app.use("/me", usersRouter);
 app.use(globalErrorHandler);
