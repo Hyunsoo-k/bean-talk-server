@@ -5,6 +5,7 @@ import validateCategory from "./validate-category.js";
 import validatePost from "./validate-post.js";
 import validateComment from "./validate-comment.js";
 import validateUserMe from "./validate-user-me.js";
+import validateQuery from "./validate-query.js";
 
 export {
   validateLogin,
@@ -13,5 +14,6 @@ export {
   validateCategory,
   validatePost,
   validateComment,
-  validateUserMe
+  validateUserMe,
+  validateQuery
 };

@@ -11,14 +11,14 @@ const getPosts = async (req: Request, res: Response) => {
 
   const {
     subCategory,
-    queryOption,
+    searchType,
     keyword,
     cursor
   } = req.query;
 
   let filter = {};
 
-  switch (queryOption) {
+  switch (searchType) {
     case "title":
       filter = {
         title: {
@@ -35,7 +35,7 @@ const getPosts = async (req: Request, res: Response) => {
         }
       };
       break;
-    case "titleAndContent":
+    case "titleOrContent":
       filter = {
         $or: [
           {

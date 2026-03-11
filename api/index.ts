@@ -10,7 +10,8 @@ import {
   usersRouter,
   postsRouter,
   commentsRouter,
-  repliesRouter
+  repliesRouter,
+  integratedPostsRouter
 } from "../src/routers/index.js"
 
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts", postsRouter);
+app.use("/integratedPosts", integratedPostsRouter);
 app.use("/auth", authRouter);
 app.use("/me", usersRouter);
 app.use(globalErrorHandler);

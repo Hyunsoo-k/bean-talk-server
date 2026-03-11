@@ -51,9 +51,18 @@ Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhjMDI
 ### DELETE 알림
 
 ### GET 내 게시글 목록
-GET http://localhost:3000/me/my-posts
+GET http://localhost:3000/me/my-posts?cursor=699c2b5e2ccdd14b3ccb82ae
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcxOTE2Mzk1LCJleHAiOjE3NzIwMDI3OTV9.FoWeKEs9C4TOpPyqrsjtTbTLS1dAoXJMNkjp3VmLch0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcyMzEyNzE4LCJleHAiOjE3NzIzOTkxMTh9.0uVftTBOxwz-71MBGEr-Hoa44_ntv7APhnEa2Sc3DGk
+
+### GET 내 스크랩 목록
+GET http://localhost:3000/me/my-scraps
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcyMzQyODY2LCJleHAiOjE3NzI0MjkyNjZ9.5-30QLr_f5rpQkAMtYjrYdAlEXnvZLdQPIhF3x2JYOU
+
+### GET 통합 게시글 목록
+GET http://localhost:3000/integrated-posts?keyword=변화&keyword-option=title
+Content-Type: application/json
 
 ### GET 게시글 목록
 GET http://localhost:3000/categories/notice/posts
