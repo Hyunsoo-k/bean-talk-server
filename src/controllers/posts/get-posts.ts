@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Request, Response } from "express";
 import type { PipelineStage } from "mongoose";
 import mongoose from "mongoose";
 
@@ -10,15 +10,15 @@ const getPosts = async (req: Request, res: Response) => {
   const { category } = req.params as { category: Category };
 
   const {
-    subCategory,
-    searchType,
+    "sub-category": subCategory,
+    "keyword-option": keywordOption,
     keyword,
     cursor
   } = req.query;
 
   let filter = {};
 
-  switch (searchType) {
+  switch (keywordOption) {
     case "title":
       filter = {
         title: {
