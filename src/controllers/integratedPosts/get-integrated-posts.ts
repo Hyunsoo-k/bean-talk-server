@@ -88,7 +88,7 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
       ...filter,
       _id: {
         $lte: objectIdCursor
-      }
+      },
     };
   }
 
@@ -129,6 +129,12 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
         },
         title: 1,
         content: 1,
+        views: 1,
+        likes: 1,
+        scraps: 1,
+        commentCount: 1,
+        createdAt: 1,
+        updatedAt: 1,
       },
     }
   ];
