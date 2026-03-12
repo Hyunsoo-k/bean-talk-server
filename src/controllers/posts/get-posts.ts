@@ -117,6 +117,7 @@ const getPosts = async (req: Request, res: Response) => {
         },
         title: 1,
         content: 1,
+        category: 1,
         subCategory: {
           $cond: {
             if: {

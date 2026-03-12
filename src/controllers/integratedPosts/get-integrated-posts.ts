@@ -127,6 +127,7 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
           nickname: 1,
           profileImageUrl: 1,
         },
+        category: 1,
         title: 1,
         content: 1,
         views: 1,
