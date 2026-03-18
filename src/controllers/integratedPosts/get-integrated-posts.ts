@@ -7,22 +7,22 @@ import optimizePosts from "../../utils/optimize-bbs.js";
 
 const getIntegratedPosts = async (req: Request, res: Response) => {
   const {
-    keyword,
-    "keyword-option": keywordOption,
+    "search-target": searchTarget,
+    "search-query": searchQuery,
     cursor
   } = req.query as {
-    keyword: string,
-    "keyword-option"?: "title" | "content" | "titleOrContent" | "author",
+    "search-target": "titleOrContent" | "title" | "content" | "author",
+    "search-query": string,
     cursor?: string
   };
 
   let filter = {};
 
-  switch (keywordOption) {
+  switch (searchTarget) {
     case "title":
       filter = {
         title: {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i",
         },
       };
@@ -31,7 +31,7 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
     case "content":
       filter = {
         content: {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i",
         },
       };
@@ -42,11 +42,11 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
         $or: [
           {
             title: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i",
             },
             content: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i",
             },
           },
@@ -57,7 +57,7 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
     case "author":
       filter = {
         "author.nickname": {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i",
         },
       }
@@ -68,13 +68,13 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
         $or: [
           {
             title: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i",
             },
           },
           {
             content: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i",
             },
           },

@@ -11,18 +11,18 @@ const getPosts = async (req: Request, res: Response) => {
 
   const {
     "sub-category": subCategory,
-    "keyword-option": keywordOption,
-    keyword,
+    "search-target": saerchTarget,
+    "search-query": searchQuery,
     cursor
   } = req.query;
 
   let filter = {};
 
-  switch (keywordOption) {
+  switch (saerchTarget) {
     case "title":
       filter = {
         title: {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i"
         }
       };
@@ -30,7 +30,7 @@ const getPosts = async (req: Request, res: Response) => {
     case "content":
       filter = {
         content: {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i"
         }
       };
@@ -40,13 +40,13 @@ const getPosts = async (req: Request, res: Response) => {
         $or: [
           {
             title: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i"
             }
           },
           {
             content: {
-              $regex: keyword,
+              $regex: searchQuery,
               $options: "i"
             }
           }
@@ -56,7 +56,7 @@ const getPosts = async (req: Request, res: Response) => {
     case "author":
       filter = {
         author: {
-          $regex: keyword,
+          $regex: searchQuery,
           $options: "i"
         }
       };
