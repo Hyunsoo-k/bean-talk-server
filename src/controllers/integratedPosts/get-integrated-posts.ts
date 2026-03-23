@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 import type { Post as PostType } from "../../types/post.js";
+import { SearchTarget } from "../../types/searchTarget.js";
 import { Post } from "../../mongoose-models/index.js";
 import optimizePosts from "../../utils/optimize-bbs.js";
 
@@ -11,7 +12,7 @@ const getIntegratedPosts = async (req: Request, res: Response) => {
     "search-query": searchQuery,
     cursor
   } = req.query as {
-    "search-target": "titleOrContent" | "title" | "content" | "author",
+    "search-target": SearchTarget,
     "search-query": string,
     cursor?: string
   };
