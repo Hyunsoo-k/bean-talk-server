@@ -1,3 +1,3 @@
-import getIntegratedPosts from "./get-integrated-posts.js";
+import getIntegratedSearch from "./get-integrated-search.js";
 
-export { getIntegratedPosts };
+export { getIntegratedSearch };
