@@ -9,7 +9,8 @@ const VALID_SUB_CATEGORIES = [
   "hiring",
   "seeking",
   "domestic",
-  "international"
+  "international",
+  "all"
 ] as const;
 
 const VALID_SEARCH_TARGETS = [
