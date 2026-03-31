@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
+import mongoose, { PipelineStage } from "mongoose";
 
 import type { Post as PostType } from "../../types/post.js";
 import { SearchTarget } from "../../types/searchTarget.js";
@@ -17,7 +17,16 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
     cursor?: string
   };
 
-  let filter = {};
+  const limit = 12;
+  const aggregationPipeline: PipelineStage[] = [];
+
+  let filter: any = {};
+  const regexQuery = searchQuery
+    ? {
+      $regex: searchQuery,
+      $options: "i"
+    }
+    : null;
 
   switch (searchTarget) {
     case "title":
@@ -45,23 +54,19 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
             title: {
               $regex: searchQuery,
               $options: "i",
-            },
+            }
+          },
+          {
             content: {
               $regex: searchQuery,
               $options: "i",
-            },
+            }
           },
         ]
       };
       break;
 
     case "author":
-      filter = {
-        "author.nickname": {
-          $regex: searchQuery,
-          $options: "i",
-        },
-      }
       break;
 
     default:
@@ -93,12 +98,36 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
     };
   }
 
-  const limit = 12;
-
-  const aggregationPipeline: mongoose.PipelineStage[] = [
-    {
+  if (searchTarget === "author" && searchQuery) {
+    aggregationPipeline.push(
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      {
+        $unwind: "$author",
+      },
+      {
+        $match: {
+          "author.nickname": regexQuery,
+          ...(cursor
+            ? { _id: { $lt: new mongoose.Types.ObjectId(cursor) } }
+            : {}
+          ),
+        },
+      }
+    );
+  } else {
+    aggregationPipeline.push({
       $match: filter,
-    },
+    });
+  }
+
+  aggregationPipeline.push(
     {
       $sort: {
         _id: -1,
@@ -106,40 +135,64 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
     },
     {
       $limit: limit + 1,
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "author",
-      },
-    },
-    {
-      $unwind: {
-        path: "$author",
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      $project: {
-        author: {
-          _id: 1,
-          nickname: 1,
-          profileImageUrl: 1,
-        },
-        category: 1,
-        title: 1,
-        content: 1,
-        views: 1,
-        likes: 1,
-        scraps: 1,
-        commentCount: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      },
     }
-  ];
+  );
+
+  aggregationPipeline.push(
+    {
+      $sort: {
+        _id: -1,
+      }
+    },
+    {
+      $limit: limit + 1,
+    }
+  );
+
+  if (searchTarget !== "author") {
+    aggregationPipeline.push(
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "authorInfo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$authorInfo",
+          preserveNullAndEmptyArrays: true,
+        },
+      }
+    );
+  }
+
+  aggregationPipeline.push({
+    $project: {
+      author: {
+        _id: "$authorInfo._id",
+        nickname: "$authorInfo.nickname",
+        profileImageUrl: "$authorInfo.profileImageUrl",
+      },
+      title: 1,
+      content: 1,
+      category: 1,
+      subCategory: {
+        $cond: {
+          if: { $ne: ["$subCategory", undefined] },
+          then: "$subCategory",
+          else: "$$REMOVE",
+        },
+      },
+      views: 1,
+      likes: 1,
+      scraps: 1,
+      commentCount: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    },
+  });
 
   const posts = await Post.aggregate(aggregationPipeline);
 

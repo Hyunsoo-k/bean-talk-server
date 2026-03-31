@@ -8,227 +8,193 @@ import optimizePosts from "../../utils/optimize-bbs.js";
 
 const getPosts = async (req: Request, res: Response) => {
   const { category } = req.params as { category: Category };
-
   const {
     "sub-category": subCategory,
-    "search-target": saerchTarget,
+    "search-target": searchTarget,
     "search-query": searchQuery,
-    cursor
-  } = req.query;
+    cursor,
+  } = req.query as {
+    "sub-category"?: string;
+    "search-target"?: string;
+    "search-query"?: string;
+    cursor?: string;
+  };
 
-  let filter = {};
+  const limit = 12;
+  const aggregationPipeline: PipelineStage[] = [];
 
-  switch (saerchTarget) {
-    case "title":
-      filter = {
-        title: {
-          $regex: searchQuery,
-          $options: "i"
-        }
-      };
-      break;
-    case "content":
-      filter = {
-        content: {
-          $regex: searchQuery,
-          $options: "i"
-        }
-      };
-      break;
-    case "titleOrContent":
-      filter = {
-        $or: [
+  let filter: any = {};
+  const regexQuery = searchQuery
+    ? {
+      $regex: searchQuery,
+      $options: "i"
+    }
+    : null;
+
+  if (regexQuery) {
+    switch (searchTarget) {
+      case "title":
+        filter.title = regexQuery;
+        break;
+
+      case "content":
+        filter.content = regexQuery;
+        break;
+
+      case "titleOrContent":
+        filter.$or = [
           {
-            title: {
-              $regex: searchQuery,
-              $options: "i"
-            }
+            title: regexQuery,
           },
           {
-            content: {
-              $regex: searchQuery,
-              $options: "i"
-            }
+            content: regexQuery,
+          },
+        ];
+        break;
+      
+      case "author":
+        break;
+      
+      default:
+        filter.$or = [
+          {
+            title: regexQuery,
+          },
+          {
+            content: regexQuery,
           }
         ]
-      };
-      break;
-    case "author":
-      filter = {
-        author: {
-          $regex: searchQuery,
-          $options: "i"
-        }
-      };
-      break;
+    }
   }
 
-  if (subCategory && subCategory!== "all") {
-    filter = {
-      ...filter,
-      subCategory
-    }
+  if (subCategory && subCategory !== "all") {
+    filter.subCategory = subCategory;
   }
 
   if (cursor) {
-    const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
-    filter = {
-      ...filter,
-      _id: {
-        $lte: objectIdCursor
-      }
+    filter._id = {
+      $lt: new mongoose.Types.ObjectId(cursor),
     };
   }
 
-  const limit = 12;
-
-  const aggregationPipeline: PipelineStage[] = [
-    {
+  if (searchTarget === "author" && searchQuery) {
+    aggregationPipeline.push(
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      {
+        $unwind: "$author",
+      },
+      {
+        $match: {
+          "author.nickname": regexQuery,
+          ...(subCategory && subCategory !== "all"
+              ? { subCategory }
+              : {}
+            ),
+          ...(cursor
+            ? { _id: { $lt: new mongoose.Types.ObjectId(cursor) } }
+            : {}
+          ),
+        },
+      }
+    );
+  } else {
+    aggregationPipeline.push({
       $match: filter,
-    },
+    });
+  }
+
+  aggregationPipeline.push(
     {
       $sort: {
         _id: -1,
-      }
+      },
     },
     {
       $limit: limit + 1,
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "author",
-      }
-    },
-    {
-      $unwind: {
-        path: "$author",
-        preserveNullAndEmptyArrays: true,
-      }
-    },
-    {
-      $project: {
-        author: {
-          _id: 1,
-          nickname: 1,
-          profileImageUrl: 1,
-        },
-        title: 1,
-        content: 1,
-        category: 1,
-        subCategory: {
-          $cond: {
-            if: {
-              $ne: ["$subCategory", undefined]
-            },
-            then: "$subCategory",
-            else: "$$REMOVE",
-          }
-        },
-        employmentType: {
-          $cond: {
-            if: {
-              $eq: [category, "job"]
-            },
-            then: "$employmentType",
-            else: "$$REMOVE",
-          }
-        },
-        position: {
-          $cond: {
-            if: {
-              $eq: [category, "job"]
-            },
-            then: "$position",
-            else: "$$REMOVE",
-          }
-        },
-        payAmount: {
-          $cond: {
-            if: {
-              $eq: [category, "job"]
-            },
-            then: "$payAmount",
-            else: "$$REMOVE",
-          }
-        },
-        startTime: {
-          $cond: {
-            if: {
-              $eq: [category, "job"]
-            },
-            then: "$startTime",
-            else: "$$REMOVE",
-          }
-        },
-        endTime: {
-          $cond: {
-            if: {
-              $eq: [category, "job"]
-            },
-            then: "$endTime",
-            else: "$$REMOVE",
-          }
-        },
-        address: {
-          $cond: {
-            if: { 
-              $and: [
-                {
-                  $eq: [category, "job"],
-                },
-                {
-                  $eq: ["$subCategory", "hiring"],
-                }
-              ]
-            },
-            then: "$address",
-            else: "$$REMOVE", 
-          }
-        },
-        latitude: {
-          $cond: {
-            if: { 
-              $and: [
-                {
-                  $eq: [category, "job"],
-                },
-                {
-                  $eq: ["$subCategory", "hiring"],
-                }
-              ]
-            },
-            then: "$latitude",
-            else: "$$REMOVE", 
-          }
-        },
-        longitude: {
-          $cond: {
-            if: { 
-              $and: [
-                {
-                  $eq: [category, "job"],
-                },
-                {
-                  $eq: ["$subCategory", "hiring"],
-                }
-              ]
-            },
-            then: "$longitude",
-            else: "$$REMOVE", 
-          }
-        },
-        views: 1,
-        likes: 1,
-        scraps: 1,
-        commentCount: 1,
-        createdAt: 1,
-        updatedAt: 1,
-      },
     }
-  ];
+  );
+
+  if (searchTarget !== "author") {
+    aggregationPipeline.push(
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "authorInfo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$authorInfo",
+          preserveNullAndEmptyArrays: true,
+        },
+      }
+    );
+  }
+
+  aggregationPipeline.push({
+    $project: {
+      author: {
+        _id: "$authorInfo._id",
+        nickname: "$authorInfo.nickname",
+        profileImageUrl: "$authorInfo.profileImageUrl",
+      },
+      title: 1,
+      content: 1,
+      category: 1,
+      subCategory: {
+        $cond: {
+          if: { $ne: ["$subCategory", undefined] },
+          then: "$subCategory",
+          else: "$$REMOVE",
+        },
+      },
+      ...(category === "job"
+        ? {
+            employmentType: 1,
+            position: 1,
+            payAmount: 1,
+            startTime: 1,
+            endTime: 1,
+            address: {
+              $cond: {
+                if: { $eq: ["$subCategory", "hiring"] },
+                then: "$address",
+                else: "$$REMOVE",
+              },
+            },
+            latitude: {
+              $cond: {
+                if: { $eq: ["$subCategory", "hiring"] },
+                then: "$latitude",
+                else: "$$REMOVE",
+              },
+            },
+            longitude: {
+              $cond: {
+                if: { $eq: ["$subCategory", "hiring"] },
+                then: "$longitude",
+                else: "$$REMOVE",
+              },
+            },
+          }
+        : {}),
+      views: 1,
+      likes: 1,
+      scraps: 1,
+      commentCount: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    },
+  });
 
   const posts = await POST_MODELS[category].aggregate(aggregationPipeline);
 
@@ -247,13 +213,11 @@ const getPosts = async (req: Request, res: Response) => {
   );
   const optimizedPosts = await Promise.all(unoptimizedPosts);
 
-  const postsData = {
+  res.status(200).json({
     posts: optimizedPosts,
     hasNextPage,
     nextCursor,
-  };
-
-  res.status(200).json(postsData);
+  });
 };
 
 export default getPosts;
