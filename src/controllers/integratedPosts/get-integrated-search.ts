@@ -156,12 +156,12 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
           from: "users",
           localField: "author",
           foreignField: "_id",
-          as: "authorInfo",
+          as: "author",
         },
       },
       {
         $unwind: {
-          path: "$authorInfo",
+          path: "$author",
           preserveNullAndEmptyArrays: true,
         },
       }
@@ -171,9 +171,9 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
   aggregationPipeline.push({
     $project: {
       author: {
-        _id: "$authorInfo._id",
-        nickname: "$authorInfo.nickname",
-        profileImageUrl: "$authorInfo.profileImageUrl",
+        _id: 1,
+        nickname: 1,
+        profileImageUrl: 1,
       },
       title: 1,
       content: 1,
