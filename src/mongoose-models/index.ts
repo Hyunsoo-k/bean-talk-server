@@ -91,6 +91,8 @@ const Notice = Post.discriminator("notice", new mongoose.Schema({}));
 
 const Thread = Post.discriminator("thread", new mongoose.Schema({}));
 
+const Essay = Post.discriminator("essay", new mongoose.Schema({}));
+
 export {
   User,
   Post,
@@ -99,6 +101,7 @@ export {
   Thread,
   Job,
   Promotion,
+  Essay,
   CommentContainer,
   MyPostContainer,
   MyScrapContainer,
