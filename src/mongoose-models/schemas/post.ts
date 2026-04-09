@@ -11,6 +11,10 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    thumbnailUrl: {
+      type: String,
+      default: null,
+    },
     title: {
       type: String,
       required: true,
@@ -33,14 +37,12 @@ const PostSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        default: []
       }
     ],
     scraps: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        default: []
       }
     ],
   },

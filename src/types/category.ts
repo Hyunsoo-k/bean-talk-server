@@ -1,4 +1,4 @@
-type Category = "notice" | "news" | "thread" | "job" | "promotion"
+type Category = "notice" | "news" | "thread" | "job" | "promotion" | "essay";
 
 type SubCategory ="cafe" | "delivery" | "hiring" | "seeking" | "domestic" | "international";
 

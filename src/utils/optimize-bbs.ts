@@ -5,10 +5,6 @@ import type { Category } from "../types/category.js";
 
 const optimizePosts = async (post: Post, category?: Category, ) => {
   const $ = cheerio.load(post.content || "");
-
-  const firstImage = $("img").first();
-  const thumbnailUrl = firstImage.length ? firstImage.attr("src") : null;
-  
   const textContent = $("body").text().trim().slice(0, 700);
 
   return {
@@ -22,7 +18,7 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
     scraps: post.scraps,
     commentCount: post.commentCount,
     author: post.author,
-    thumbnailUrl,
+    thumbnailUrl: post.thumbnailUrl,
     title: post.title,
     content: textContent,
     ...(category === "job" && {
