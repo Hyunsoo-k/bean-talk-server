@@ -147,6 +147,7 @@ const getPosts = async (req: Request, res: Response) => {
         nickname: 1,
         profileImageUrl: 1,
       },
+      thumbnailUrl: 1,
       title: 1,
       content: 1,
       category: 1,

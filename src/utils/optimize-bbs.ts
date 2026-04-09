@@ -5,7 +5,7 @@ import type { Category } from "../types/category.js";
 
 const optimizePosts = async (post: Post, category?: Category, ) => {
   const $ = cheerio.load(post.content || "");
-  const textContent = $("body").text().trim().slice(0, 700);
+  const slicedContent = $("body").text().trim().slice(0, 700);
 
   return {
     _id: post._id,
@@ -20,7 +20,7 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
     author: post.author,
     thumbnailUrl: post.thumbnailUrl,
     title: post.title,
-    content: textContent,
+    content: slicedContent,
     ...(category === "job" && {
       employmentType: post.employmentType,
       position: post.position,
