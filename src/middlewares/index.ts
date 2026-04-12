@@ -6,6 +6,7 @@ import validatePost from "./validate-post.js";
 import validateComment from "./validate-comment.js";
 import validateUserMe from "./validate-user-me.js";
 import validateQueryString from "./validate-query-string.js";
+import validateSearchLocalQuery from "./validate-search-local-query.js";
 
 export {
   validateLogin,
@@ -15,5 +16,6 @@ export {
   validatePost,
   validateComment,
   validateUserMe,
-  validateQueryString
+  validateQueryString,
+  validateSearchLocalQuery
 };

@@ -10,7 +10,8 @@ import {
   postsRouter,
   commentsRouter,
   repliesRouter,
-  integratedSearchRouter
+  integratedSearchRouter,
+  searchLocalRouter
 } from "../src/routers/index.js"
 
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
@@ -40,6 +41,7 @@ const startServer = async () => {
     app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
     app.use("/categories/:category/posts", postsRouter);
     app.use("/integrated-search", integratedSearchRouter);
+    app.use("/search-local", searchLocalRouter);
     app.use("/auth", authRouter);
     app.use("/me", usersRouter);
     app.use(globalErrorHandler);

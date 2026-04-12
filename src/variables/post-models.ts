@@ -6,10 +6,11 @@ import {
   Thread,
   Job,
   Promotion,
-  Essay
+  Essay,
+  Exploration
 } from "../mongoose-models/index.js";
 
-type Category = "news" | "notice" | "thread" | "promotion" | "job" | "essay";
+type Category = "news" | "notice" | "thread" | "promotion" | "job" | "essay" | "exploration";
 
 const POST_MODELS: Record<Category, Model<any, any, any>> = {
   "news": News,
@@ -17,7 +18,8 @@ const POST_MODELS: Record<Category, Model<any, any, any>> = {
   "thread": Thread,
   "job": Job,
   "promotion": Promotion,
-  "essay": Essay
+  "essay": Essay,
+  "exploration": Exploration
 };
 
 export default POST_MODELS;

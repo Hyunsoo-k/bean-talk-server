@@ -158,36 +158,6 @@ const getPosts = async (req: Request, res: Response) => {
           else: "$$REMOVE",
         },
       },
-      ...(category === "job"
-        ? {
-            employmentType: 1,
-            position: 1,
-            payAmount: 1,
-            startTime: 1,
-            endTime: 1,
-            address: {
-              $cond: {
-                if: { $eq: ["$subCategory", "hiring"] },
-                then: "$address",
-                else: "$$REMOVE",
-              },
-            },
-            latitude: {
-              $cond: {
-                if: { $eq: ["$subCategory", "hiring"] },
-                then: "$latitude",
-                else: "$$REMOVE",
-              },
-            },
-            longitude: {
-              $cond: {
-                if: { $eq: ["$subCategory", "hiring"] },
-                then: "$longitude",
-                else: "$$REMOVE",
-              },
-            },
-          }
-        : {}),
       views: 1,
       likes: 1,
       scraps: 1,

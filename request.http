@@ -61,11 +61,11 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcyMzQyODY2LCJleHAiOjE3NzI0MjkyNjZ9.5-30QLr_f5rpQkAMtYjrYdAlEXnvZLdQPIhF3x2JYOU
 
 ### GET 통합 게시글 목록
-GET http://localhost:3000/integrated-posts?keyword=변화&keyword-option=title
+GET http://localhost:3000/integrated-search?search-target=title&search-query=산림
 Content-Type: application/json
 
 ### GET 게시글 목록
-GET http://localhost:3000/categories/notice/posts
+GET http://localhost:3000/categories/essay/posts
 Content-Type: application/json
 
 ### GET 게시글
@@ -73,14 +73,13 @@ GET http://localhost:3000/categories/promotion/posts/6990cd385ed2affedea7aad3
 Content-Type: application/json
 
 ### CREATE 게시글
-POST http://localhost:3000/categories/promotion/posts
+POST http://localhost:3000/categories/essay/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcxNjcwNDU0LCJleHAiOjE3NzE3NTY4NTR9.EJCNv9Q3ttue2IWcr1TkpvTTOsY2xu0Opm6v_vI55Jg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzc1MDM0MjkxLCJleHAiOjE3NzUxMjA2OTF9.-OE3GOHyuCnMb9Bz4QQJU3D389wMw2B22hM8n4iMdx4
 
 {
-  "subCategory": "cafe",
-  "title": "프로모션 게시글 작성 1",
-  "content": "프로모션 게시글 작성 1"
+  "title": "에세이 게시글 작성 4",
+  "content": "에세이 게시글 작성 4"
 }
 
 ### CREATE 게시글 (JOB)
@@ -113,6 +112,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxN
 DELETE http://localhost:3000/categories/promotion/posts/69883779072481095aa73189
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
+
+### GET 주소
+GET http://localhost:3000/search-local?query=카페
+Content-Type: application/json
 
 ### GET 댓글 목록
 GET http://localhost:3000/categories/thread/posts/6931ff6f8c64ac8489acc69a/comments
