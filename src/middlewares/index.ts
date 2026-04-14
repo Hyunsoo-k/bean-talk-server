@@ -5,8 +5,8 @@ import validateCategory from "./validate-category.js";
 import validatePost from "./validate-post.js";
 import validateComment from "./validate-comment.js";
 import validateUserMe from "./validate-user-me.js";
-import validateQueryString from "./validate-query-string.js";
-import validateSearchLocalQuery from "./validate-search-local-query.js";
+import validatePostsQueryString from "./validate-posts-query-string.js";
+import validateLocalsQueryString from "./validate-locals-query-string.js";
 
 export {
   validateLogin,
@@ -16,6 +16,6 @@ export {
   validatePost,
   validateComment,
   validateUserMe,
-  validateQueryString,
-  validateSearchLocalQuery
+  validatePostsQueryString,
+  validateLocalsQueryString as validateSearchLocalQuery
 };

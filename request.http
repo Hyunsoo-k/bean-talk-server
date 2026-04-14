@@ -65,7 +65,7 @@ GET http://localhost:3000/integrated-search?search-target=title&search-query=산
 Content-Type: application/json
 
 ### GET 게시글 목록
-GET http://localhost:3000/categories/essay/posts
+GET http://localhost:3000/categories/essay/posts?type=title&query=커피
 Content-Type: application/json
 
 ### GET 게시글
@@ -114,7 +114,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjkxNGVhMjBlOTliNTRkNDk5ODg5YTE0IiwiaWF0IjoxNzcwNTM0NzQ0LCJleHAiOjE3NzA2MjExNDR9.UFP4r3kUg3i_VMTue7pNTqXkPuittkhIo-2W0NyrAOs
 
 ### GET 주소
-GET http://localhost:3000/search-local?query=카페
+GET http://localhost:3000/search-local?query=%EC%84%9C%EC%9A%B8%EC%8B%9C%EC%B2%AD
 Content-Type: application/json
 
 ### GET 댓글 목록

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+
 import HttpError from "../error/http-error.js";
-import { SubCategory } from "../types/category.js";
-import { SearchTarget } from "../types/searchTarget.js";
+import { PostsQueryString } from "../types/posts-query-string.js";
 
 const VALID_SUB_CATEGORIES = [
   "cafe",
@@ -20,21 +20,12 @@ const VALID_SEARCH_TARGETS = [
   "author"
 ] as const;
 
-const validateQueryString = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const validatePostsQueryString = async (req: Request, res: Response, next: NextFunction) => {
   const {
     "sub-category": subCategory,
-    "search-target": searchTarget,
-    "search-query": searchQuery
-  } = req.query as {
-    "sub-category"?: SubCategory
-    "search-target"?: SearchTarget,
-    "search-query"?: string
-    "cursor"?: string
-  };
+    "type": type,
+    "query": query
+  } = req.query as PostsQueryString;
 
   if (
     subCategory &&
@@ -43,12 +34,12 @@ const validateQueryString = async (
     throw new HttpError(400, "올바르지 않은 서브 카테고리 입니다.");
   }
 
-  if (searchTarget) {
-    if (!VALID_SEARCH_TARGETS.includes(searchTarget as typeof VALID_SEARCH_TARGETS[number])) {
+  if (type) {
+    if (!VALID_SEARCH_TARGETS.includes(type as typeof VALID_SEARCH_TARGETS[number])) {
       throw new HttpError(400, "올바르지 않은 검색 타입 입니다.");
     }
 
-    if (!searchQuery) {
+    if (!query) {
       throw new HttpError(400, "검색어를 입력해 주세요.");
     }
   }
@@ -56,4 +47,4 @@ const validateQueryString = async (
   next();
 };
 
-export default validateQueryString;
+export default validatePostsQueryString;

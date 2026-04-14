@@ -10,9 +10,6 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
   return {
     _id: post._id,
     category: post.category,
-    ...(category && (category !== "thread") && {
-      subCategory: post.subCategory
-    }),
     views: post.views,
     likes: post.likes,
     scraps: post.scraps,
@@ -21,18 +18,6 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
     thumbnailUrl: post.thumbnailUrl,
     title: post.title,
     content: slicedContent,
-    ...(category === "job" && {
-      employmentType: post.employmentType,
-      position: post.position,
-      payAmount: post.payAmount,
-      startTime: post.startTime,
-      endTime: post.endTime,
-    }),
-    ...(category === "job" && post.subCategory === "hiring" && {
-      address: post.address,
-      latitude: post.latitude,
-      longitude: post.longitude,
-    }),
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,
   };

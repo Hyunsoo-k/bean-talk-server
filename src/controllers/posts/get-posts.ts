@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import type { PipelineStage } from "mongoose";
 import mongoose from "mongoose";
 
-import type { Category, Post } from "../../types/index.js";
+import type { Category, Post, PostsQueryString } from "../../types/index.js";
 import POST_MODELS from "../../variables/post-models.js";
 import optimizePosts from "../../utils/optimize-bbs.js";
 
@@ -10,29 +10,21 @@ const getPosts = async (req: Request, res: Response) => {
   const { category } = req.params as { category: Category };
   const {
     "sub-category": subCategory,
-    "search-target": searchTarget,
-    "search-query": searchQuery,
+    "type": type,
+    "query": query,
     cursor,
-  } = req.query as {
-    "sub-category"?: string;
-    "search-target"?: string;
-    "search-query"?: string;
-    cursor?: string;
-  };
+  } = req.query as PostsQueryString;
 
   const limit = 12;
   const aggregationPipeline: PipelineStage[] = [];
 
   let filter: any = {};
-  const regexQuery = searchQuery
-    ? {
-      $regex: searchQuery,
-      $options: "i"
-    }
-    : null;
 
+  const regexQuery = query
+    ? { $regex: query, $options: "i" }
+    : null;
   if (regexQuery) {
-    switch (searchTarget) {
+    switch (type) {
       case "title":
         filter.title = regexQuery;
         break;
@@ -43,12 +35,8 @@ const getPosts = async (req: Request, res: Response) => {
 
       case "titleOrContent":
         filter.$or = [
-          {
-            title: regexQuery,
-          },
-          {
-            content: regexQuery,
-          },
+          { title: regexQuery },
+          { content: regexQuery },
         ];
         break;
       
@@ -57,15 +45,13 @@ const getPosts = async (req: Request, res: Response) => {
       
       default:
         filter.$or = [
-          {
-            title: regexQuery,
-          },
-          {
-            content: regexQuery,
-          }
+          { title: regexQuery },
+          { content: regexQuery }
         ]
     }
   }
+
+  console.log(filter)
 
   if (subCategory && subCategory !== "all") {
     filter.subCategory = subCategory;
@@ -77,7 +63,7 @@ const getPosts = async (req: Request, res: Response) => {
     };
   }
 
-  if (searchTarget === "author" && searchQuery) {
+  if (type === "author" && query) {
     aggregationPipeline.push(
       {
         $lookup: {
@@ -87,9 +73,7 @@ const getPosts = async (req: Request, res: Response) => {
           as: "author",
         },
       },
-      {
-        $unwind: "$author",
-      },
+      { $unwind: "$author" },
       {
         $match: {
           "author.nickname": regexQuery,
@@ -105,23 +89,15 @@ const getPosts = async (req: Request, res: Response) => {
       }
     );
   } else {
-    aggregationPipeline.push({
-      $match: filter,
-    });
+    aggregationPipeline.push({ $match: filter });
   }
 
   aggregationPipeline.push(
-    {
-      $sort: {
-        _id: -1,
-      },
-    },
-    {
-      $limit: limit + 1,
-    }
+    { $sort: {  _id: -1 } },
+    { $limit: limit + 1 }
   );
 
-  if (searchTarget !== "author") {
+  if (type !== "author") {
     aggregationPipeline.push(
       {
         $lookup: {
@@ -131,22 +107,13 @@ const getPosts = async (req: Request, res: Response) => {
           as: "author",
         },
       },
-      {
-        $unwind: {
-          path: "$author",
-          preserveNullAndEmptyArrays: true,
-        },
-      }
+      { $unwind: { path: "$author", preserveNullAndEmptyArrays: true } }
     );
   }
 
   aggregationPipeline.push({
     $project: {
-      author: {
-        _id: 1,
-        nickname: 1,
-        profileImageUrl: 1,
-      },
+      author: { _id: 1, nickname: 1, profileImageUrl: 1 },
       thumbnailUrl: 1,
       title: 1,
       content: 1,
@@ -168,6 +135,7 @@ const getPosts = async (req: Request, res: Response) => {
   });
 
   const posts = await POST_MODELS[category].aggregate(aggregationPipeline);
+  console.log(posts);
 
   const hasNextPage = posts.length > limit;
 

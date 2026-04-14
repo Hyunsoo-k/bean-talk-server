@@ -11,8 +11,8 @@ import {
   postsRouter,
   commentsRouter,
   repliesRouter,
-  integratedSearchRouter,
-  searchLocalRouter
+  allPostsSearchRouter,
+  localsSearchRouter
 } from "../src/routers/index.js"
 
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
@@ -22,10 +22,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: [
-    process.env.SERVER_DEVELOP_URL!,
-    process.env.FRONT_END_DEVELOP_URL!,
-  ],
+  origin: [process.env.SERVER_DEVELOP_URL!, process.env.FRONT_END_DEVELOP_URL!],
   credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
@@ -35,8 +32,8 @@ app.use(cookieParser());
 app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts", postsRouter);
-app.use("/integrated-search", integratedSearchRouter);
-app.use("/search-local", searchLocalRouter);
+app.use("/all-posts/search", allPostsSearchRouter);
+app.use("/locals/search", localsSearchRouter);
 app.use("/auth", authRouter);
 app.use("/me", usersRouter);
 app.use(globalErrorHandler);

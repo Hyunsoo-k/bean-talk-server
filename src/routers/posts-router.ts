@@ -5,7 +5,7 @@ import {
   verifyAccessToken,
   validateCategory,
   validatePost,
-  validateQueryString
+  validatePostsQueryString
 } from "../middlewares/index.js";
 import {
   getPosts,
@@ -23,7 +23,7 @@ const postsRouter = express.Router({ mergeParams: true });
 postsRouter.get(
   "/",
   expressAsyncHandler(validateCategory),
-  expressAsyncHandler(validateQueryString),
+  expressAsyncHandler(validatePostsQueryString),
   expressAsyncHandler(getPosts)
 );
 

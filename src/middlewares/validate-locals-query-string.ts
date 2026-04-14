@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../error/http-error.js";
 
-const validateSearchLocalQuery = async (req: Request, res: Response, next: NextFunction) => {
+const validateLocalsQueryString = async (req: Request, res: Response, next: NextFunction) => {
   const { query, page } = req.query;
   if (!query) {
     throw new HttpError(400, "잘못된 검색어입니다.");
@@ -25,4 +25,4 @@ const validateSearchLocalQuery = async (req: Request, res: Response, next: NextF
   next();
 };
 
-export default validateSearchLocalQuery
+export default validateLocalsQueryString
