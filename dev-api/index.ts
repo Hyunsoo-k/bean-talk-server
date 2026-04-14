@@ -38,8 +38,8 @@ const startServer = async () => {
     app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
     app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
     app.use("/categories/:category/posts", postsRouter);
-    app.use("/all-posts/search", allPostsSearchRouter);
-    app.use("/locals/search", localsSearchRouter);
+    app.use("/all-posts", allPostsSearchRouter);
+    app.use("/locals", localsSearchRouter);
     app.use("/auth", authRouter);
     app.use("/me", usersRouter);
     app.use(globalErrorHandler);

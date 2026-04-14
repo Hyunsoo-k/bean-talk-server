@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 
 import { validatePostsQueryString } from "../middlewares/index.js";
-import { getIntegratedSearch } from "../controllers/integratedPosts/index.js"
+import { getAllPostsSearch } from "../controllers/get-all-posts-search/index.js"
 
 const allPostsSearchRouter = express.Router({ mergeParams: true });
 
@@ -10,7 +10,7 @@ const allPostsSearchRouter = express.Router({ mergeParams: true });
 allPostsSearchRouter.get(
   "/",
   expressAsyncHandler(validatePostsQueryString),
-  expressAsyncHandler(getIntegratedSearch)
+  expressAsyncHandler(getAllPostsSearch)
 );
 
 export default allPostsSearchRouter;

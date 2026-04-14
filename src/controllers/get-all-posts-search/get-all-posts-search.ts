@@ -2,18 +2,18 @@ import { Request, Response } from "express";
 import mongoose, { PipelineStage } from "mongoose";
 
 import type { Post as PostType } from "../../types/post.js";
-import { SearchTarget } from "../../types/search-type.js";
+import { SearchType } from "../../types/search-type.js";
 import { Post } from "../../mongoose-models/index.js";
 import optimizePosts from "../../utils/optimize-bbs.js";
 
-const getIntegratedSearch = async (req: Request, res: Response) => {
+const getAllPostsSearch = async (req: Request, res: Response) => {
   const {
-    "search-target": searchTarget,
-    "search-query": searchQuery,
+    "type": type,
+    "query": query,
     cursor
   } = req.query as {
-    "search-target": SearchTarget,
-    "search-query": string,
+    "type": SearchType,
+    "query": string,
     cursor?: string
   };
 
@@ -21,46 +21,29 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
   const aggregationPipeline: PipelineStage[] = [];
 
   let filter: any = {};
-  const regexQuery = searchQuery
-    ? {
-      $regex: searchQuery,
-      $options: "i"
-    }
+  const regexQuery = query
+    ? { $regex: query, $options: "i" }
     : null;
 
-  switch (searchTarget) {
+  switch (type) {
     case "title":
       filter = {
-        title: {
-          $regex: searchQuery,
-          $options: "i",
-        },
+        title: { $regex: query, $options: "i" },
       };
       break;
     
     case "content":
       filter = {
-        content: {
-          $regex: searchQuery,
-          $options: "i",
-        },
+        content: { $regex: query, $options: "i" },
       };
       break;
     
     case "titleOrContent":
       filter = {
         $or: [
-          {
-            title: {
-              $regex: searchQuery,
-              $options: "i",
-            }
+          { title: { $regex: query,  $options: "i" }
           },
-          {
-            content: {
-              $regex: searchQuery,
-              $options: "i",
-            }
+          { content: { $regex: query, $options: "i" }
           },
         ]
       };
@@ -72,18 +55,8 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
     default:
       filter = {
         $or: [
-          {
-            title: {
-              $regex: searchQuery,
-              $options: "i",
-            },
-          },
-          {
-            content: {
-              $regex: searchQuery,
-              $options: "i",
-            },
-          },
+          { title: {  $regex: query, $options: "i" } },
+          { content: { $regex: query, $options: "i" } },
         ],
       };
   }
@@ -92,13 +65,11 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
     const objectIdCursor = new mongoose.Types.ObjectId(cursor as string);
     filter = {
       ...filter,
-      _id: {
-        $lte: objectIdCursor
-      },
+      _id: { $lte: objectIdCursor }
     };
   }
 
-  if (searchTarget === "author" && searchQuery) {
+  if (type === "author" && query) {
     aggregationPipeline.push(
       {
         $lookup: {
@@ -108,9 +79,7 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
           as: "author",
         },
       },
-      {
-        $unwind: "$author",
-      },
+      { $unwind: "$author" },
       {
         $match: {
           "author.nickname": regexQuery,
@@ -122,34 +91,20 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
       }
     );
   } else {
-    aggregationPipeline.push({
-      $match: filter,
-    });
+    aggregationPipeline.push({ $match: filter });
   }
 
   aggregationPipeline.push(
-    {
-      $sort: {
-        _id: -1,
-      },
-    },
-    {
-      $limit: limit + 1,
-    }
+    { $sort: { _id: -1 } },
+    { $limit: limit + 1 }
   );
 
   aggregationPipeline.push(
-    {
-      $sort: {
-        _id: -1,
-      }
-    },
-    {
-      $limit: limit + 1,
-    }
+    { $sort: {  _id: -1 } },
+    { $limit: limit + 1 }
   );
 
-  if (searchTarget !== "author") {
+  if (type !== "author") {
     aggregationPipeline.push(
       {
         $lookup: {
@@ -159,12 +114,7 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
           as: "author",
         },
       },
-      {
-        $unwind: {
-          path: "$author",
-          preserveNullAndEmptyArrays: true,
-        },
-      }
+      { $unwind: { path: "$author", preserveNullAndEmptyArrays: true } }
     );
   }
 
@@ -220,4 +170,4 @@ const getIntegratedSearch = async (req: Request, res: Response) => {
   res.status(200).json(postsData);
 };
 
-export default getIntegratedSearch;
+export default getAllPostsSearch;
