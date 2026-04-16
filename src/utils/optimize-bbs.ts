@@ -20,11 +20,11 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
     content: slicedContent,
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,
-    ...(category === "exploration" && { 
-      address: post.address, 
-      lat: post.lat, 
-      lng: post.lng 
-    }),
+    // ...(category === "exploration" && { 
+    //   address: post.address, 
+    //   lat: post.lat, 
+    //   lng: post.lng 
+    // }),
   };
 };
 

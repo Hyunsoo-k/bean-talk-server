@@ -27,24 +27,6 @@ const News = Post.discriminator(
   })
 );
 
-const Exploration = Post.discriminator(
-  "exploration",
-  new mongoose.Schema({
-    address: {
-      type: String,
-      required: true,
-    },
-    lat: {
-      type: String,
-      required: true,
-    },
-    lng: {
-      type: String,
-      required: true,
-    }
-  })
-);
-
 const Job = Post.discriminator(
   "job",
   new mongoose.Schema({
@@ -104,6 +86,8 @@ const Promotion = Post.discriminator(
     },
   })
 );
+
+const Exploration = Post.discriminator("exploration", new mongoose.Schema({}));
 
 const Notice = Post.discriminator("notice", new mongoose.Schema({}));
 
