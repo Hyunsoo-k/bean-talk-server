@@ -34,11 +34,11 @@ const Exploration = Post.discriminator(
       type: String,
       required: true,
     },
-    latitude: {
+    lat: {
       type: String,
       required: true,
     },
-    longitude: {
+    lng: {
       type: String,
       required: true,
     }

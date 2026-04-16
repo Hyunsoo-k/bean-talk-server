@@ -7,7 +7,8 @@ const isValidCategory  = (category: string): category is Category => {
     "job",
     "news",
     "notice",
-    "essay"
+    "essay",
+    "exploration"
   ];
 
   if (!validCategories.includes(category)) {

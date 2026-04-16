@@ -18,8 +18,8 @@ type Post = {
   startTime?: string;
   endTime?: string;
   address?: string;
-  latitude?: number;
-  longitude?: number;
+  lat?: number;
+  lng?: number;
   commentCount: number;
   likes: mongoose.Types.ObjectId[];
   scraps: mongoose.Types.ObjectId[];

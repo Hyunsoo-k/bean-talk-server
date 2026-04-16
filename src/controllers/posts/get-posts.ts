@@ -125,6 +125,27 @@ const getPosts = async (req: Request, res: Response) => {
           else: "$$REMOVE",
         },
       },
+      address: {
+        $cond: {
+          if: { $ne: ["$address", undefined] },
+          then: "$address",
+          else: "$$REMOVE",
+        },
+      },
+      lat: {
+        $cond: {
+          if: { $ne: ["$lat", undefined] },
+          then: "$lat",
+          else: "$$REMOVE",
+        },
+      },
+      lng: {
+        $cond: {
+          if: { $ne: ["$lng", undefined] },
+          then: "$lng",
+          else: "$$REMOVE",
+        },
+      },
       views: 1,
       likes: 1,
       scraps: 1,
