@@ -11,7 +11,7 @@ import {
   postsRouter,
   commentsRouter,
   repliesRouter,
-  allPostsSearchRouter,
+  integratedSearchRouter,
   localsSearchRouter
 } from "../src/routers/index.js"
 
@@ -38,7 +38,7 @@ const startServer = async () => {
     app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
     app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
     app.use("/categories/:category/posts", postsRouter);
-    app.use("/all-posts", allPostsSearchRouter);
+    app.use("/integrated-search", integratedSearchRouter);
     app.use("/locals", localsSearchRouter);
     app.use("/auth", authRouter);
     app.use("/me", usersRouter);

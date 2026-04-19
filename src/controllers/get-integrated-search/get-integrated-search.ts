@@ -6,7 +6,7 @@ import { SearchType } from "../../types/search-type.js";
 import { Post } from "../../mongoose-models/index.js";
 import optimizePosts from "../../utils/optimize-bbs.js";
 
-const getAllPostsSearch = async (req: Request, res: Response) => {
+const getIntegratedSearch = async (req: Request, res: Response) => {
   const {
     "type": type,
     "query": query,
@@ -170,4 +170,4 @@ const getAllPostsSearch = async (req: Request, res: Response) => {
   res.status(200).json(postsData);
 };
 
-export default getAllPostsSearch;
+export default getIntegratedSearch;
