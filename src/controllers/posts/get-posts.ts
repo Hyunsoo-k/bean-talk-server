@@ -51,8 +51,6 @@ const getPosts = async (req: Request, res: Response) => {
     }
   }
 
-  console.log(filter)
-
   if (subCategory && subCategory !== "all") {
     filter.subCategory = subCategory;
   }
@@ -74,19 +72,7 @@ const getPosts = async (req: Request, res: Response) => {
         },
       },
       { $unwind: "$author" },
-      {
-        $match: {
-          "author.nickname": regexQuery,
-          ...(subCategory && subCategory !== "all"
-              ? { subCategory }
-              : {}
-            ),
-          ...(cursor
-            ? { _id: { $lt: new mongoose.Types.ObjectId(cursor) } }
-            : {}
-          ),
-        },
-      }
+      { $match: { "author.nickname": regexQuery } }
     );
   } else {
     aggregationPipeline.push({ $match: filter });
@@ -156,7 +142,6 @@ const getPosts = async (req: Request, res: Response) => {
   });
 
   const posts = await POST_MODELS[category].aggregate(aggregationPipeline);
-  console.log(posts);
 
   const hasNextPage = posts.length > limit;
 
