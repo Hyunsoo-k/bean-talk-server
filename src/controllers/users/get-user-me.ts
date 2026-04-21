@@ -14,6 +14,7 @@ const getUserMe = async (req: Request, res: Response) => {
         email: 1,
         nickname: 1,
         profileImageUrl: 1,
+        role: 1,
       }
     )
     .lean();
