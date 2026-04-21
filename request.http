@@ -65,7 +65,7 @@ GET http://localhost:3000/integrated-search?search-target=title&search-query=산
 Content-Type: application/json
 
 ### GET 게시글 목록
-GET http://localhost:3000/categories/essay/posts?type=title&query=커피
+GET http://localhost:3000/categories/news/posts?sub-category=international
 Content-Type: application/json
 
 ### GET 게시글

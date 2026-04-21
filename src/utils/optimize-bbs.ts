@@ -2,14 +2,17 @@ import * as cheerio from "cheerio";
 
 import type { Post } from "../types/post.js";
 import type { Category } from "../types/category.js";
+import isCategoryHavingSubCategory from "./isCategoryHavingSubCategory.js";
 
 const optimizePosts = async (post: Post, category?: Category, ) => {
   const $ = cheerio.load(post.content || "");
   const slicedContent = $("body").text().trim().slice(0, 700);
+  const hasSubCategory = category && isCategoryHavingSubCategory(category);
 
   return {
     _id: post._id,
     category: post.category,
+    ...(hasSubCategory ? { subCategory: post.subCategory } : {}),
     views: post.views,
     likes: post.likes,
     scraps: post.scraps,
@@ -20,11 +23,6 @@ const optimizePosts = async (post: Post, category?: Category, ) => {
     content: slicedContent,
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,
-    // ...(category === "exploration" && { 
-    //   address: post.address, 
-    //   lat: post.lat, 
-    //   lng: post.lng 
-    // }),
   };
 };
 

@@ -2,4 +2,6 @@ type Category = "notice" | "news" | "thread" | "job" | "promotion" | "essay" | "
 
 type SubCategory ="cafe" | "delivery" | "hiring" | "seeking" | "domestic" | "international";
 
-export type { Category, SubCategory };
+type CategoryHavingSubCategory = "news" | "job" | "promotion";
+
+export type { Category, SubCategory, CategoryHavingSubCategory };
