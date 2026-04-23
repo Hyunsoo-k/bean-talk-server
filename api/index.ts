@@ -22,7 +22,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: [process.env.SERVER_DEVELOP_URL!, process.env.FRONT_END_DEVELOP_URL!],
+  origin: [process.env.CLIENT_DEVELOPMENT_URL!, process.env.CLIENT_DEPLOYMENT_URL!],
   credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
