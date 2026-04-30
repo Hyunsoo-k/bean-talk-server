@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -13,22 +12,35 @@ import {
   repliesRouter,
   integratedSearchRouter,
   localsSearchRouter
-} from "../src/routers/index.js"
+} from "../src/routers/index.js";
 
 import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 
-dotenv.config();
-
 const app = express();
-
 app.use(cors({
-  origin: [process.env.CLIENT_DEVELOPMENT_URL!, process.env.CLIENT_DEPLOYMENT_URL!],
+  origin: (origin, callback) => {
+    console.log("Allowed Origins:", 
+      String(process.env.CLIENT_DEVELOPMENT_URL).substring(0, 10), 
+      String(process.env.CLIENT_DEPLOYMENT_URL).substring(0, 10)
+    );
+    
+    const whitelist = [
+      process.env.CLIENT_DEVELOPMENT_URL,
+      process.env.CLIENT_DEPLOYMENT_URL
+    ];
+
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("CORS Rejected for origin:", origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-
 app.use("/categories/:category/posts/:post_id/comments/:comment_id/replies", repliesRouter);
 app.use("/categories/:category/posts/:post_id/comments", commentsRouter);
 app.use("/categories/:category/posts", postsRouter);
