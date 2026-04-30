@@ -18,12 +18,7 @@ import globalErrorHandler from "../src/error-handler/global-error-handler.js";
 
 const app = express();
 app.use(cors({
-  origin: (origin, callback) => {
-    console.log("Allowed Origins:", 
-      String(process.env.CLIENT_DEVELOPMENT_URL), 
-      String(process.env.CLIENT_DEPLOYMENT_URL)
-    );
-    
+  origin: (origin, callback) => {  
     const whitelist = [
       process.env.CLIENT_DEVELOPMENT_URL,
       process.env.CLIENT_DEPLOYMENT_URL
