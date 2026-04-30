@@ -20,8 +20,8 @@ const app = express();
 app.use(cors({
   origin: (origin, callback) => {
     console.log("Allowed Origins:", 
-      String(process.env.CLIENT_DEVELOPMENT_URL).substring(0, 10), 
-      String(process.env.CLIENT_DEPLOYMENT_URL).substring(0, 10)
+      String(process.env.CLIENT_DEVELOPMENT_URL), 
+      String(process.env.CLIENT_DEPLOYMENT_URL)
     );
     
     const whitelist = [
